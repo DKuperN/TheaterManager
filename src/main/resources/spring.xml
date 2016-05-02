@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+
+    <import resource="menu-loader.xml"/>
+
+    <bean id="appMenu" class="consoleui.AppMenu">
+        <constructor-arg ref="userService"/>
+    </bean>
+
+    <bean id="theaterManagerApp" class="StartConsoleApp">
+        <constructor-arg ref="appMenu"/>
+    </bean>
+
+    <bean id="userService" class="services.impl.UserServiceImpl">
+        <constructor-arg ref="userDao"/>
+    </bean>
+
+    <bean id="userDao" class="daos.impl.UserDaoImpl"/>
+
+</beans>
