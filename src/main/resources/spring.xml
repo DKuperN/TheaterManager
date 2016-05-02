@@ -11,7 +11,8 @@
  		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 
-    <import resource="menu-loader.xml"/>
+    <import resource="mysql-connection.xml"/>
+    <!--<import resource="menu-loader.xml"/>-->
 
     <bean id="appMenu" class="consoleui.AppMenu">
         <constructor-arg ref="userService"/>
