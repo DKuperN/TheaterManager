@@ -20,7 +20,7 @@ public class StartConsoleApp {
         StartConsoleApp app = (StartConsoleApp) context.getBean("theaterManagerApp");
 
         try {
-            app.appMenu.ShowMenu();
+            app.appMenu.showMainMenu();
         } catch (IOException e) {
             e.printStackTrace();
         }
