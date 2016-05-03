@@ -23,14 +23,32 @@
         <constructor-arg ref="appMenu"/>
     </bean>
 
+    <!--Services-->
     <bean id="userService" class="services.impl.UserServiceImpl">
         <constructor-arg ref="userDao"/>
     </bean>
-
-    <bean id="userDao" class="daos.impl.UserDaoImpl">
-        <constructor-arg ref="dataSource"/>
+    <bean id="eventService" class="services.impl.EventServiceImpl">
+        <constructor-arg ref="eventDao"/>
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
     </bean>
 
-    <bean id="utils" class="utils.Utils"/>
+    <!--DAO-->
+    <bean id="userDao" class="daos.impl.UserDaoImpl">
+        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="utils"/>
+    </bean>
+
+    <bean id="eventDao" class="daos.impl.EventDaoImpl" scope="prototype">
+        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="utils"/>
+    </bean>
+
+    <bean id="utils" class="utils.Utils">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
 
 </beans>

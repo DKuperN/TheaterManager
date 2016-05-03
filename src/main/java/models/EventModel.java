@@ -8,7 +8,7 @@ public class EventModel {
     private int eventId;
 
     private String eventName;
-
+    //Auditorium
     private String eventPlace;
 
     private Date eventDate;
@@ -23,6 +23,16 @@ public class EventModel {
         HIHG,
         MID,
         LOW
+    }
+
+    public EventModel(int eventId, String eventName, String eventPlace, Date eventDate, Time eventStartTime, Time eventEndTime, double priceForTicket) {
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.eventPlace = eventPlace;
+        this.eventDate = eventDate;
+        this.eventStartTime = eventStartTime;
+        this.eventEndTime = eventEndTime;
+        this.priceForTicket = priceForTicket;
     }
 
     public double getPriceForTicket() {

@@ -2,6 +2,7 @@ package daos.impl;
 
 import daos.UserDAO;
 import models.UserModel;
+import utils.Utils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -10,33 +11,42 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-//TODO need optimise queries
-
-public class UserDaoImpl implements UserDAO<UserModel> {
+public class UserDaoImpl implements UserDAO {
 
     private DataSource dataSource;
+    private Utils utils;
 
-    public UserDaoImpl(DataSource dataSource) {
+    public UserDaoImpl(DataSource dataSource, Utils utils) {
         this.dataSource = dataSource;
+        this.utils = utils;
     }
 
     public void saveNewUser(String userName, String userEmail) {
-        final String SQL_SAVE_NEW_USER = "INSERT INTO USERS (USERNAME, USEREMAIL) VALUES (?, ?)";
+        final String SQL_SAVE_USER = "INSERT INTO USERS (USERNAME, USEREMAIL) VALUES (?, ?)";
         HashMap<Integer, String> map = new HashMap<Integer, String>();
         map.put(1, userName);
         map.put(2, userEmail);
-        executeQuery(SQL_SAVE_NEW_USER, map);
+        utils.executeQuery(SQL_SAVE_USER, map);
     }
 
     public void deleteUser(int userID) {
-        final String SQL_SAVE_NEW_USER = "DELETE FROM USERS WHERE USERID = ?";
+        final String SQL_DELETE_NEW_USER = "DELETE FROM USERS WHERE USERID = ?";
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
         map.put(1, userID);
-        executeQuery(SQL_SAVE_NEW_USER, map);
+        utils.executeQuery(SQL_DELETE_NEW_USER, map);
     }
 
     public UserModel getUserById(int userId) {
         final String SQL_SEARCH_USER_BY_ID = "SELECT * FROM USERS WHERE USERID = ?";
+
+//        UserModel userModel = new UserModel();
+        HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+        parameterMap.put("USERID", Integer.class);
+        parameterMap.put("USERNAME", String.class);
+        parameterMap.put("USEREMAIL", String.class);
+//        return utils.getObjectFromQuery(SQL_SEARCH_USER_BY_ID, userId, parameterMap, ???);
+
+        //TODO need refactoring - move this code to Utils.java
         Connection connection = null;
         UserModel userModel = null;
         try {
@@ -55,13 +65,13 @@ public class UserDaoImpl implements UserDAO<UserModel> {
             if (userModel != null){
                 return userModel;
             } else {
-                System.out.println("User with that parameters is not founded");
+                System.out.println("Object with that parameters is not founded");
             }
         } catch (SQLException e) {
             System.out.println("FAIL: something wrong with connection or query");
             e.printStackTrace();
         } finally {
-            closeConnection(connection);
+            utils.closeConnection(connection);
         }
         return userModel;
     }
@@ -69,54 +79,7 @@ public class UserDaoImpl implements UserDAO<UserModel> {
     public int getUserIdByName(String userName) {
         String parameterName = userName.contains("@") ? "USEREMAIL" : "USERNAME";
         final String SQL_SEARCH_USER_BY_NAME = "SELECT * FROM USERS WHERE " + parameterName + " = ?";
-        Connection connection = null;
-        int id = 0;
-        try {
-            connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_USER_BY_NAME);
-            ps.setString(1, userName);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                id = rs.getInt("USERID");
-            }
-            ps.close();
-            return id;
-        } catch (SQLException e) {
-            System.out.println("FAIL: something wrong with connection or query");
-            e.printStackTrace();
-        } finally {
-            closeConnection(connection);
-        }
-        return id;
-    }
-
-    private void executeQuery(String query, HashMap parameters){
-        Connection connection = null;
-        try {
-            connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement(query);
-            for (int i = 1; i < parameters.size()+1; i++) {
-                ps.setString(i, String.valueOf(parameters.get(i)));
-            }
-            ps.executeUpdate();
-            ps.close();
-            System.out.println("Action OK!");
-        } catch (SQLException e) {
-            System.out.println("FAIL: something wrong with connection or query");
-            e.printStackTrace();
-        } finally {
-            closeConnection(connection);
-        }
-    }
-
-    private void closeConnection(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.out.println("FAIL: something wrong with closing connection");
-            }
-        }
+        return utils.executeWithReturnInt(SQL_SEARCH_USER_BY_NAME, userName, "USERID");
     }
 
 }

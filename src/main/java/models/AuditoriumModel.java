@@ -14,6 +14,16 @@ public class AuditoriumModel {
 
     private boolean isSeatVIP;
 
+    private boolean isAuditoriumFree;
+
+    public boolean isAuditoriumFree() {
+        return isAuditoriumFree;
+    }
+
+    public void setAuditoriumFree(boolean auditoriumFree) {
+        isAuditoriumFree = auditoriumFree;
+    }
+
     public String getAuditoriumName() {
         return auditoriumName;
     }
