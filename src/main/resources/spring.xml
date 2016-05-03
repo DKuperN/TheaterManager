@@ -16,6 +16,7 @@
 
     <bean id="appMenu" class="consoleui.AppMenu">
         <constructor-arg ref="userService"/>
+        <constructor-arg ref="utils"/>
     </bean>
 
     <bean id="theaterManagerApp" class="StartConsoleApp">
@@ -26,6 +27,10 @@
         <constructor-arg ref="userDao"/>
     </bean>
 
-    <bean id="userDao" class="daos.impl.UserDaoImpl"/>
+    <bean id="userDao" class="daos.impl.UserDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="utils" class="utils.Utils"/>
 
 </beans>

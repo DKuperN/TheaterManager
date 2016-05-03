@@ -1,34 +1,31 @@
 package consoleui;
 
-
-//import java.io.Console;
+import models.UserModel;
 import services.UserService;
+import utils.Utils;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.Scanner;
 
 public class AppMenu {
 
     private UserService userService;
+    private Utils utils;
 
     private Scanner scanner = new Scanner(System.in);
 
-    private Properties prop = new Properties();
-    private InputStream inputStream = getClass().getClassLoader().getResourceAsStream("menu.properties");
-
-    public AppMenu(UserService userService) {
+    public AppMenu(UserService userService, Utils utils) {
         this.userService = userService;
+        this.utils = utils;
     }
 
     public void ShowMenu() throws IOException {
 
-        System.out.print(getPropertyByName("menu.choseAction")+"\n");
-        System.out.print(getPropertyByName("menu.choseAction1")+"\n");
-        System.out.print(getPropertyByName("menu.choseAction2")+"\n");
-        System.out.print(getPropertyByName("menu.choseAction.exit")+"\n");
+        System.out.print(utils.getPropertyByName("menu.choseAction")+"\n");
+        System.out.print(utils.getPropertyByName("menu.choseAction.1")+"\n");
+        System.out.print(utils.getPropertyByName("menu.choseAction.2")+"\n");
+        System.out.print(utils.getPropertyByName("menu.choseAction.3")+"\n");
+        System.out.print(utils.getPropertyByName("menu.choseAction.exit")+"\n");
 
         while (scanner.hasNext()) {
             showSubMenu(Integer.parseInt(scanner.nextLine()), scanner);
@@ -39,40 +36,47 @@ public class AppMenu {
     private void showSubMenu(int subPosition, Scanner scanner) throws IOException {
         switch (subPosition){
             case 1:
-                System.out.println(getPropertyByName("menu.title.registerUser")+"\n*********************");
+                System.out.println(utils.getPropertyByName("menu.title.registerUser")+"\n*********************");
                 createUserMenu(scanner);
                 return;
             case 2:
-                System.out.println(getPropertyByName("menu.title.removeUser")+"\n*********************");
+                System.out.println(utils.getPropertyByName("menu.title.removeUser")+"\n*********************");
                 removeUser(scanner);
+                return;
+            case 3:
+                System.out.println(utils.getPropertyByName("menu.title.userInfo")+"\n*********************");
+                showUserInfo(scanner);
                 return;
             default:
                 this.scanner.close();
-                System.out.println("Exit program");
+                System.out.println(utils.getPropertyByName("menu.exit"));
         }
     }
 
-    private String getPropertyByName(String propertyName) throws IOException {
-        if (inputStream != null) {
-            prop.load(inputStream);
-        } else {
-            throw new FileNotFoundException("property file 'menu.properties' not found in the classpath");
+    private void showUserInfo(Scanner scanner) throws IOException {
+        System.out.println(utils.getPropertyByName("menu.user.info"));
+        UserModel userModel = userService.getUserByName(scanner.nextLine());
+        if(userModel != null) {
+            System.out.println(utils.getPropertyByName("menu.asterix"));
+            System.out.println(utils.getPropertyByName("menu.user.info.userid") + " " + userModel.getUserId());
+            System.out.println(utils.getPropertyByName("menu.user.info.Name") + " " + userModel.getUserName());
+            System.out.println(utils.getPropertyByName("menu.user.info.Email") + " " + userModel.getUserEmail());
+            System.out.println(utils.getPropertyByName("menu.asterix"));
         }
-
-        return prop.getProperty(propertyName);
+        ShowMenu();
     }
 
     private void createUserMenu(Scanner scanner) throws IOException {
-        System.out.println(getPropertyByName("menu.user.Enter.UserName"));
+        System.out.println(utils.getPropertyByName("menu.user.Enter.UserName"));
         String userName = scanner.nextLine();
-        System.out.println(getPropertyByName("menu.user.Enter.UserEmail"));
+        System.out.println(utils.getPropertyByName("menu.user.Enter.UserEmail"));
         String userEmail = scanner.nextLine();
         userService.registerUser(userName, userEmail);
         ShowMenu();
     }
 
     private void removeUser(Scanner scanner) throws IOException {
-        System.out.println(getPropertyByName("menu.user.Enter.UserName"));
+        System.out.println(utils.getPropertyByName("menu.user.Enter.UserName"));
         userService.removeUser(scanner.nextLine());
         ShowMenu();
     }

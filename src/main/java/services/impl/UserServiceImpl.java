@@ -20,19 +20,15 @@ public class UserServiceImpl implements UserService {
         userDao.deleteUser(findUserIdByName(userName));
     }
 
-    public UserModel getUserByEmail(String userEmail) {
-        return null;
-    }
-
     public UserModel getUserByName(String userName) {
-        return null;
+        return userDao.getUserById(findUserIdByName(userName));
     }
 
     public UserModel getUserById(int userId) {
-        return null;
+        return userDao.getUserById(userId);
     }
 
-    public int findUserIdByName(String userName) {
+    private int findUserIdByName(String userName) {
         return userDao.getUserIdByName(userName);
     }
 }

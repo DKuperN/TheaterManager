@@ -17,6 +17,22 @@ public class EventModel {
 
     private Time eventEndTime;
 
+    private double priceForTicket;
+
+    enum rating {
+        HIHG,
+        MID,
+        LOW
+    }
+
+    public double getPriceForTicket() {
+        return priceForTicket;
+    }
+
+    public void setPriceForTicket(double priceForTicket) {
+        this.priceForTicket = priceForTicket;
+    }
+
     public int getEventId() {
         return eventId;
     }

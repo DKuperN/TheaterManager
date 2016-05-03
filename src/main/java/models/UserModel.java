@@ -17,6 +17,12 @@ public class UserModel {
 
     private int userId;
 
+    public UserModel(int userId, String userName, String userEmail) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userId = userId;
+    }
+
     public String getUserName() {
         return userName;
     }

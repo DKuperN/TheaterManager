@@ -11,7 +11,6 @@ public interface UserService {
 
     void removeUser(String userName);
 
-    UserModel getUserByEmail(String userEmail);
     UserModel getUserByName(String userName);
     UserModel getUserById(int userId);
 
