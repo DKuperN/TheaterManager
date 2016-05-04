@@ -6,10 +6,11 @@ import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -62,7 +63,20 @@ public class Utils {
             connection = dataSource.getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             for (int i = 1; i < parameters.size()+1; i++) {
-                ps.setString(i, String.valueOf(parameters.get(i)));
+                if(parameters.get(i) instanceof String){
+                    ps.setString(i, String.valueOf(parameters.get(i)));
+                } else if(parameters.get(i) instanceof Time){
+                    ps.setTime(i, (Time) parameters.get(i));
+                } else if(parameters.get(i) instanceof Date){
+                    java.util.Date utilDate = (Date) parameters.get(i);
+                    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                    ps.setDate(i, sqlDate);
+                } else if(parameters.get(i) instanceof Integer){
+                    ps.setInt(i, (Integer) parameters.get(i));
+                } else if(parameters.get(i) instanceof Double){
+                    ps.setDouble(i, (Double) parameters.get(i));
+                }
+
             }
             ps.executeUpdate();
             ps.close();
@@ -111,6 +125,15 @@ public class Utils {
             closeConnection(connection);
         }
         return dataModel;
-
     }
+
+    public Date dateFormatter(String date) throws ParseException {
+        DateFormat formatPattern = new SimpleDateFormat("yyyy-mm-dd");
+        return formatPattern.parse(date);
+    }
+    public Time timeFormatter(String time) throws ParseException {
+        DateFormat formatPattern = new SimpleDateFormat(time.contains(":") ? "HH:mm" : "HH.mm");
+        return new Time(formatPattern.parse(time).getTime());
+    }
+
 }

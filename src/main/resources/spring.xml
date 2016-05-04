@@ -16,6 +16,7 @@
 
     <bean id="appMenu" class="consoleui.AppMenu">
         <constructor-arg ref="userService"/>
+        <constructor-arg ref="eventService"/>
         <constructor-arg ref="utils"/>
     </bean>
 
