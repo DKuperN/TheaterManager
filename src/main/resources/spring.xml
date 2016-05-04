@@ -12,6 +12,7 @@
 
 
     <import resource="mysql-connection.xml"/>
+    <import resource="dao.xml"/>
     <!--<import resource="menu-loader.xml"/>-->
 
     <bean id="appMenu" class="consoleui.AppMenu">
@@ -36,20 +37,9 @@
         <constructor-arg ref="dateFormat"/>
     </bean>
 
-    <!--DAO-->
-    <bean id="userDao" class="daos.impl.UserDaoImpl">
-        <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="utils"/>
-    </bean>
-
-    <bean id="eventDao" class="daos.impl.EventDaoImpl" scope="prototype">
-        <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="utils"/>
-    </bean>
-
     <bean id="utils" class="utils.Utils">
         <constructor-arg ref="dataSource"/>
     </bean>
-    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
 
 </beans>
