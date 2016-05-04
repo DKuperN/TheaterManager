@@ -3,17 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd"
-        default-lazy-init="true">
+       default-lazy-init="true">
 
-    <!--DAO-->
-    <bean id="userDao" class="daos.impl.UserDaoImpl">
+    <bean id="utils" class="utils.Utils" lazy-init="true">
         <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="utils"/>
-    </bean>
-
-    <bean id="eventDao" class="daos.impl.EventDaoImpl" scope="prototype">
-        <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="utils"/>
     </bean>
 
 </beans>

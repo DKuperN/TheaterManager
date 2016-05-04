@@ -16,7 +16,7 @@ public class StartConsoleApp {
     }
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("springContext.xml");
         StartConsoleApp app = (StartConsoleApp) context.getBean("theaterManagerApp");
 
         try {

@@ -13,6 +13,7 @@
 
     <import resource="mysql-connection.xml"/>
     <import resource="dao.xml"/>
+    <import resource="utils.xml"/>
     <!--<import resource="menu-loader.xml"/>-->
 
     <bean id="appMenu" class="consoleui.AppMenu">
@@ -37,9 +38,6 @@
         <constructor-arg ref="dateFormat"/>
     </bean>
 
-    <bean id="utils" class="utils.Utils">
-        <constructor-arg ref="dataSource"/>
-    </bean>
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
 
 </beans>
