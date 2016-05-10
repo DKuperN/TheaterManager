@@ -1,9 +1,10 @@
-package spring;
+package spring.user;
 
 import daos.impl.UserDaoImpl;
 import models.UserModel;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,19 @@ public class UserDAO extends AbstractTestExecutionListener {
     private String testEmail = "testUserEmail@email.em";
 
     //TODO
-//    @BeforeClass
-//    public static void beforeTestClass() throws Exception {
-//        userDao.saveNewUser(testName, testEmail);
-//        System.out.println("Created test user!");
-//    }
+    @Ignore
+    //@BeforeClass
+    public void beforeTestClass() throws Exception {
+        userDao.saveNewUser(testName, testEmail);
+        System.out.println("Created test user!");
+    }
 
-//    @AfterClass
-//    public static void afterTestClass() throws Exception {
-//        userDao.deleteUser(userDao.getUserIdByName(testName));
-//        System.out.println("Test user removed!");
-//    }
+    @Ignore
+    //@AfterClass
+    public void afterTestClass() throws Exception {
+        userDao.deleteUser(userDao.getUserIdByName(testName));
+        System.out.println("Test user removed!");
+    }
 
     @Test
     public void testFindUserByName() throws Exception {

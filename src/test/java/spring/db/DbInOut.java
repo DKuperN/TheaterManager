@@ -1,4 +1,4 @@
-package spring;
+package spring.db;
 
 import daos.impl.EventDaoImpl;
 import daos.impl.UserDaoImpl;

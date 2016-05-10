@@ -13,7 +13,7 @@ import utils.Utils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:springContext.xml"})
-public class BeanCreationTestCase extends TestCase {
+public class ContextCreationTestCase extends TestCase {
     @Autowired
     AppMenu appMenu;
 
