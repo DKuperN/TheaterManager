@@ -4,6 +4,8 @@ import daos.impl.UserDaoImpl;
 import models.UserModel;
 import services.UserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private UserDaoImpl userDao;
@@ -28,7 +30,11 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserById(userId);
     }
 
-    private int findUserIdByName(String userName) {
+    public List<UserModel> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+    public int findUserIdByName(String userName) {
         return userDao.getUserIdByName(userName);
     }
 }

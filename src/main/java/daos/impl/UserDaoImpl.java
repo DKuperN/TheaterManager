@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserDaoImpl implements UserDAO {
 
@@ -80,6 +82,31 @@ public class UserDaoImpl implements UserDAO {
         String parameterName = userName.contains("@") ? "USEREMAIL" : "USERNAME";
         final String SQL_SEARCH_USER_BY_NAME = "SELECT * FROM USERS WHERE " + parameterName + " = ?";
         return utils.executeWithReturnInt(SQL_SEARCH_USER_BY_NAME, userName, "USERID");
+    }
+
+    public List<UserModel> getAllUsers() {
+        Connection connection = null;
+        UserModel um = null;
+        List<UserModel> allUsers = new ArrayList<UserModel>();
+        final String SQL_SEARCH_USER_BY_NAME = "SELECT * FROM USERS";
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_USER_BY_NAME);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                um = new UserModel(
+                        rs.getInt("USERID"),
+                        rs.getString("USERNAME"),
+                        rs.getString("USEREMAIL")
+                );
+                allUsers.add(um);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allUsers;
     }
 
 }

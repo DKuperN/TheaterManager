@@ -2,6 +2,8 @@ package services;
 
 import models.UserModel;
 
+import java.util.List;
+
 /**
  * Created by Dzianis_Kupryianchyk on 02-May-16.
  */
@@ -13,5 +15,7 @@ public interface UserService {
 
     UserModel getUserByName(String userName);
     UserModel getUserById(int userId);
+
+    List<UserModel> getAllUsers();
 
 }
