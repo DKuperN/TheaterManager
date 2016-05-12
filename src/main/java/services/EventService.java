@@ -11,6 +11,6 @@ public interface EventService {
     void deleteEvent(String eventName);
     void deleteEvent(int eventId);
     EventModel getEventByName(String eventName);
-    List<EventModel> allEvents();
+    List<EventModel> getAllEvents();
     boolean isAssignAuditorium(EventModel event, String auditorium, Date date);
 }

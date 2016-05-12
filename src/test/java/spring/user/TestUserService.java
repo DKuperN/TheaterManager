@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextHierarchy({
         @ContextConfiguration(locations = {"classpath:springContext.xml"})
 })
-public class UserDAO extends AbstractTestExecutionListener {
+public class TestUserService extends AbstractTestExecutionListener {
 
     @Autowired
     private UserServiceImpl userService;

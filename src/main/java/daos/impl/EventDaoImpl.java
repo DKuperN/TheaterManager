@@ -6,6 +6,7 @@ import utils.Utils;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,8 +86,32 @@ public class EventDaoImpl implements EventsDAO {
     }
 
     public List<EventModel> allEvents() {
-        //TODO
-        return null;
+        List<EventModel> eventModelList = new ArrayList<EventModel>();
+        final String SQL_SEARCH_EVENTS = "SELECT * FROM EVENT";
+        Connection connection = null;
+        EventModel eventModel = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_EVENTS);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                eventModel = new EventModel(
+                        rs.getInt("EVENTID"),
+                        rs.getString("EVENTNAME"),
+                        rs.getString("EVENTPLACE"),
+                        rs.getDate("EVENTDATE"),
+                        rs.getTime("EVENTSTARTTIME"),
+                        rs.getTime("EVENTENDTIME"),
+                        rs.getDouble("PRICEFORTICKET")
+                );
+                eventModelList.add(eventModel);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return eventModelList;
     }
 
     public boolean isAssignAuditorium(EventModel event, String auditorium, Date date) {

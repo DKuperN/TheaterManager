@@ -43,7 +43,7 @@ public class EventServiceImpl implements EventService {
         return eventDao.getEventByName(eventName);
     }
 
-    public List<EventModel> allEvents() {
+    public List<EventModel> getAllEvents() {
         return eventDao.allEvents();
     }
 
