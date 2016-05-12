@@ -8,7 +8,7 @@ public class EventModel {
     private int eventId;
 
     private String eventName;
-    //Auditorium
+
     private String eventPlace;
 
     private Date eventDate;
@@ -18,12 +18,6 @@ public class EventModel {
     private Time eventEndTime;
 
     private double priceForTicket;
-
-    enum rating {
-        HIHG,
-        MID,
-        LOW
-    }
 
     public EventModel(int eventId, String eventName, String eventPlace, Date eventDate, Time eventStartTime, Time eventEndTime, double priceForTicket) {
         this.eventId = eventId;
