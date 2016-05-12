@@ -1,5 +1,6 @@
 package utils;
 
+import models.AuditoriumModel;
 import models.UserModel;
 
 import javax.sql.DataSource;
@@ -7,12 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
+
 
 public class Utils {
 
@@ -31,7 +32,7 @@ public class Utils {
         } else {
             throw new FileNotFoundException("property file 'menu.properties' not found in the classpath");
         }
-
+        inputStream.close();
         return prop.getProperty(propertyName);
     }
 
@@ -129,11 +130,54 @@ public class Utils {
 
     public Date dateFormatter(String date) throws ParseException {
         DateFormat formatPattern = new SimpleDateFormat("yyyy-mm-dd");
-        return formatPattern.parse(date);
+        return (Date) formatPattern.parse(date);
     }
     public Time timeFormatter(String time) throws ParseException {
         DateFormat formatPattern = new SimpleDateFormat(time.contains(":") ? "HH:mm" : "HH.mm");
         return new Time(formatPattern.parse(time).getTime());
     }
+
+
+    public Map<String, AuditoriumModel> loadAuditoriumsFromProperties() throws IOException {
+        Properties properties = new Properties();
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("auditoriums/auditoriumslist.properties");
+        Map<String, AuditoriumModel> auditoriumModelList = new HashMap<String, models.AuditoriumModel>();
+
+        Properties auditProperties = new Properties();
+        AuditoriumModel auditoriumModel = null;
+
+        if (stream != null) {
+            properties.load(stream);
+            for(Map.Entry<Object, Object> entry : properties.entrySet()){
+                InputStream auditIstream = getClass().getClassLoader().getResourceAsStream("auditoriums/"+entry.getKey());
+                auditProperties.load(auditIstream);
+                auditoriumModel = new AuditoriumModel(
+                        auditProperties.getProperty("name"),
+                        Integer.parseInt(auditProperties.getProperty("capacity")),
+                        parseVipSeatsToArr(auditProperties.getProperty("vipSeats"))
+                );
+                auditIstream.close();
+                auditoriumModelList.put((entry.getKey().toString().split("\\-")[0]), auditoriumModel);
+            }
+
+        } else {
+            throw new FileNotFoundException("property file 'menu.properties' not found in the classpath");
+        }
+
+        stream.close();
+
+        return auditoriumModelList;
+    }
+
+    private int[] parseVipSeatsToArr(String interval){
+        String[] strArr = interval.split("\\-");
+        int arrLeight = Integer.parseInt(strArr[1]) - Integer.parseInt(strArr[0])+1;
+        int[] arr = new int[arrLeight];
+        for (int i = 0; i < arrLeight; i++) {
+            arr[i] = i + Integer.parseInt(strArr[0]);
+        }
+        return arr;
+    }
+
 
 }

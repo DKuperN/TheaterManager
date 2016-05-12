@@ -37,6 +37,9 @@
         </constructor-arg>
         <constructor-arg ref="dateFormat"/>
     </bean>
+    <bean id="auditoriumService" class="services.impl.AuditoriumServiceImpl">
+        <constructor-arg ref="utils"/>
+    </bean>
 
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
 

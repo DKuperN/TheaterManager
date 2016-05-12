@@ -4,11 +4,11 @@ public class AuditoriumModel {
 
     private String auditoriumName;
 
-    private int auditoriumId;
+    //private int auditoriumId;
 
     private int auditoriumCapacity;
 
-    private int auditoriumVIPSeats;
+    private int[] auditoriumVIPSeats;
 
     private int placeNumber;
 
@@ -16,8 +16,22 @@ public class AuditoriumModel {
 
     private boolean isAuditoriumFree;
 
+    public AuditoriumModel(String name, int capacity, int[] vipSeatses) {
+        this.auditoriumName = name;
+        this.auditoriumCapacity = capacity;
+        this.auditoriumVIPSeats = vipSeatses;
+    }
+
     public boolean isAuditoriumFree() {
         return isAuditoriumFree;
+    }
+
+    public int[] getAuditoriumVIPSeats() {
+        return auditoriumVIPSeats;
+    }
+
+    public void setAuditoriumVIPSeats(int[] auditoriumVIPSeats) {
+        this.auditoriumVIPSeats = auditoriumVIPSeats;
     }
 
     public void setAuditoriumFree(boolean auditoriumFree) {
@@ -32,13 +46,13 @@ public class AuditoriumModel {
         this.auditoriumName = auditoriumName;
     }
 
-    public int getAuditoriumId() {
-        return auditoriumId;
-    }
+//    public int getAuditoriumId() {
+//        return auditoriumId;
+//    }
 
-    public void setAuditoriumId(int auditoriumId) {
-        this.auditoriumId = auditoriumId;
-    }
+//    public void setAuditoriumId(int auditoriumId) {
+//        this.auditoriumId = auditoriumId;
+//    }
 
     public int getAuditoriumCapacity() {
         return auditoriumCapacity;
@@ -46,14 +60,6 @@ public class AuditoriumModel {
 
     public void setAuditoriumCapacity(int auditoriumCapacity) {
         this.auditoriumCapacity = auditoriumCapacity;
-    }
-
-    public int getAuditoriumVIPSeats() {
-        return auditoriumVIPSeats;
-    }
-
-    public void setAuditoriumVIPSeats(int auditoriumVIPSeats) {
-        this.auditoriumVIPSeats = auditoriumVIPSeats;
     }
 
     public int getPlaceNumber() {
