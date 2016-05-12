@@ -15,6 +15,23 @@ CREATE DATABASE IF NOT EXISTS `theatredb` /*!40100 DEFAULT CHARACTER SET utf8 */
 USE `theatredb`;
 
 
+-- Dumping structure for table theatredb.booktickets
+CREATE TABLE IF NOT EXISTS `booktickets` (
+  `ticketID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL DEFAULT '0',
+  `eventID` int(11) NOT NULL DEFAULT '0',
+  `placeNumber` int(11) NOT NULL DEFAULT '0',
+  `resultPrice` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ticketID`),
+  KEY `FK_bookTickets_users` (`userID`),
+  KEY `FK_bookTickets_event` (`eventID`),
+  CONSTRAINT `FK_bookTickets_event` FOREIGN KEY (`eventID`) REFERENCES `event` (`eventID`),
+  CONSTRAINT `FK_bookTickets_users` FOREIGN KEY (`userID`) REFERENCES `users` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
+
+
 -- Dumping structure for table theatredb.event
 CREATE TABLE IF NOT EXISTS `event` (
   `eventID` int(11) NOT NULL AUTO_INCREMENT,

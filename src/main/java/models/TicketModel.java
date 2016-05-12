@@ -4,33 +4,13 @@ import java.util.List;
 
 public class TicketModel {
 
-    private int TicketId;
+    private int ticketId;
+    private EventModel eventModel;
+    private Double resultPrice;
 
-    private List Tickets;
-
-    private boolean isFreeTicket;
-
-    public int getTicketId() {
-        return TicketId;
-    }
-
-    public void setTicketId(int ticketId) {
-        TicketId = ticketId;
-    }
-
-    public List getTickets() {
-        return Tickets;
-    }
-
-    public void setTickets(List tickets) {
-        Tickets = tickets;
-    }
-
-    public boolean isFreeTicket() {
-        return isFreeTicket;
-    }
-
-    public void setFreeTicket(boolean freeTicket) {
-        isFreeTicket = freeTicket;
+    public TicketModel(int ticketId, EventModel eventModel, Double resultPrice) {
+        this.ticketId = ticketId;
+        this.eventModel = eventModel;
+        this.resultPrice = resultPrice;
     }
 }

@@ -40,6 +40,13 @@
     <bean id="auditoriumService" class="services.impl.AuditoriumServiceImpl">
         <constructor-arg ref="utils"/>
     </bean>
+    <bean id="bookingService" class="services.impl.BookingServiceImpl">
+        <constructor-arg ref="bookingDao"/>
+        <constructor-arg ref="utils"/>
+    </bean>
+    <bean id="priceService" class="services.impl.PriceServiceImpl">
+        <constructor-arg ref="bookingDao"/>
+    </bean>
 
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
 

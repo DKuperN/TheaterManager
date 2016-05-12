@@ -35,7 +35,7 @@ public class EventModel {
         this.priceForTicket = priceForTicket;
     }
 
-    public double getPriceForTicket() {
+    public double getBasePriceForTicket() {
         return priceForTicket;
     }
 

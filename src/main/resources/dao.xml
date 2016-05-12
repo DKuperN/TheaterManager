@@ -15,5 +15,12 @@
         <constructor-arg ref="dataSource"/>
         <constructor-arg ref="utils"/>
     </bean>
+    <bean id="bookingDao" class="daos.impl.BookingDAOImpl" scope="prototype">
+        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="userService"/>
+        <constructor-arg ref="eventService"/>
+        <constructor-arg ref="auditoriumService"/>
+        <constructor-arg ref="utils"/>
+    </bean>
 
 </beans>

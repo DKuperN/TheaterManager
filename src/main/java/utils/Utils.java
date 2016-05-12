@@ -24,13 +24,13 @@ public class Utils {
     }
 
     private Properties prop = new Properties();
-    private InputStream inputStream = getClass().getClassLoader().getResourceAsStream("menu.properties");
+    private InputStream inputStream = getClass().getClassLoader().getResourceAsStream("app.properties");
 
     public String getPropertyByName(String propertyName) throws IOException {
         if (inputStream != null) {
             prop.load(inputStream);
         } else {
-            throw new FileNotFoundException("property file 'menu.properties' not found in the classpath");
+            throw new FileNotFoundException("property file 'app.properties' not found in the classpath");
         }
         inputStream.close();
         return prop.getProperty(propertyName);
@@ -161,7 +161,7 @@ public class Utils {
             }
 
         } else {
-            throw new FileNotFoundException("property file 'menu.properties' not found in the classpath");
+            throw new FileNotFoundException("property file 'app.properties' not found in the classpath");
         }
 
         stream.close();
@@ -180,4 +180,11 @@ public class Utils {
     }
 
 
+    public Double getResultPrice(double basePriceForTicket, boolean placeVip) throws IOException {
+        Double price = basePriceForTicket;
+        if(placeVip) {
+            price = basePriceForTicket * Double.parseDouble(getPropertyByName("coefficient.vip"));
+        }
+        return price;
+    }
 }
