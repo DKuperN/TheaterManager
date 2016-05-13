@@ -6,21 +6,18 @@
         default-lazy-init="true">
 
     <!--DAO-->
-    <bean id="userDao" class="daos.impl.UserDaoImpl">
+    <bean id="userDao" parent="auditoriumService"  class="daos.impl.UserDaoImpl">
         <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="utils"/>
     </bean>
 
-    <bean id="eventDao" class="daos.impl.EventDaoImpl" scope="prototype">
+    <bean id="eventDao" parent="auditoriumService"  class="daos.impl.EventDaoImpl" scope="prototype">
         <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="utils"/>
     </bean>
-    <bean id="bookingDao" class="daos.impl.BookingDAOImpl" scope="prototype">
+    <bean id="bookingDao" parent="auditoriumService" class="daos.impl.BookingDAOImpl" scope="prototype">
         <constructor-arg ref="dataSource"/>
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>
         <constructor-arg ref="auditoriumService"/>
-        <constructor-arg ref="utils"/>
     </bean>
 
 </beans>

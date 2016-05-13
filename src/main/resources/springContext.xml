@@ -16,10 +16,9 @@
     <!--<import resource="menu-loader.xml"/>-->
     <context:property-placeholder location="classpath:app.properties"/>
 
-    <bean id="appMenu" class="consoleui.AppMenu">
+    <bean id="appMenu" parent="auditoriumService" class="consoleui.AppMenu">
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>
-        <constructor-arg ref="utils"/>
     </bean>
 
     <bean id="theaterManagerApp" class="StartConsoleApp">
@@ -40,8 +39,7 @@
     <bean id="auditoriumService" class="services.impl.AuditoriumServiceImpl">
         <constructor-arg ref="utils"/>
     </bean>
-    <bean id="bookingService" class="services.impl.BookingServiceImpl">
-        <constructor-arg ref="bookingDao"/>
+    <bean id="bookingService" parent="priceService" class="services.impl.BookingServiceImpl">
         <constructor-arg ref="utils"/>
     </bean>
     <bean id="priceService" class="services.impl.PriceServiceImpl">
