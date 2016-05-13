@@ -7,6 +7,8 @@ import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.*;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -180,11 +182,23 @@ public class Utils {
     }
 
 
-    public Double getResultPrice(double basePriceForTicket, boolean placeVip) throws IOException {
+    public Double getResultPrice(double basePriceForTicket, boolean placeVip, int eventRating) throws IOException {
         Double price = basePriceForTicket;
+        String coefficientVip = getPropertyByName("coefficient.vip");
         if(placeVip) {
-            price = basePriceForTicket * Double.parseDouble(getPropertyByName("coefficient.vip"));
+            price = basePriceForTicket * Double.parseDouble(coefficientVip);
         }
-        return price;
+        switch (eventRating) {
+            case 1:
+                price = price * 1.2;
+                break;
+            case 2:
+                price = price * 1.1;
+                break;
+            default:
+                break;
+        }
+
+        return new BigDecimal(price).setScale(2, RoundingMode.UP).doubleValue();
     }
 }

@@ -19,7 +19,6 @@ import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:springContext.xml"})
-@Component
 public class CreateTestEvent {
 
     @Autowired

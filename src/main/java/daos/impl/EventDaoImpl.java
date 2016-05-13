@@ -67,8 +67,8 @@ public class EventDaoImpl implements EventsDAO {
                         rs.getDate("EVENTDATE"),
                         rs.getTime("EVENTSTARTTIME"),
                         rs.getTime("EVENTENDTIME"),
-                        rs.getDouble("PRICEFORTICKET")
-                );
+                        rs.getDouble("PRICEFORTICKET"),
+                        rs.getInt("RATING"));
             }
             ps.close();
             if (eventModel != null){
@@ -102,8 +102,8 @@ public class EventDaoImpl implements EventsDAO {
                         rs.getDate("EVENTDATE"),
                         rs.getTime("EVENTSTARTTIME"),
                         rs.getTime("EVENTENDTIME"),
-                        rs.getDouble("PRICEFORTICKET")
-                );
+                        rs.getDouble("PRICEFORTICKET"),
+                        rs.getInt("RATING"));
                 eventModelList.add(eventModel);
             }
             rs.close();

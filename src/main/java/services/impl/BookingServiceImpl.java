@@ -1,9 +1,12 @@
 package services.impl;
 
 import daos.impl.BookingDAOImpl;
+import models.TicketModel;
 import services.BookingService;
 import utils.Utils;
 
+import java.io.IOException;
+import java.sql.Date;
 import java.util.Map;
 
 public class BookingServiceImpl implements BookingService {
@@ -20,11 +23,17 @@ public class BookingServiceImpl implements BookingService {
         return null;
     }
 
-    public void bookTicket(String eventName, int seatNumber, String userName) {
-
+    public TicketModel bookTicket(String eventName, String userName, int seatNumber) {
+        TicketModel ticket = null;
+        try {
+            ticket = booking.bookTicket(eventName, userName, seatNumber);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ticket;
     }
 
-    public Map<Integer, Double> getPurchasedTicketsForEvent(String eventName, String auditName) {
-        return null;
+    public Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate) {
+        return booking.getPurchasedTicketsForEvent(eventName, eventDate);
     }
 }

@@ -19,7 +19,9 @@ public class EventModel {
 
     private double priceForTicket;
 
-    public EventModel(int eventId, String eventName, String eventPlace, Date eventDate, Time eventStartTime, Time eventEndTime, double priceForTicket) {
+    private int rating;
+
+    public EventModel(int eventId, String eventName, String eventPlace, Date eventDate, Time eventStartTime, Time eventEndTime, double priceForTicket, int rating) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventPlace = eventPlace;
@@ -27,6 +29,19 @@ public class EventModel {
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
         this.priceForTicket = priceForTicket;
+        this.rating = rating;
+    }
+
+    public double getPriceForTicket() {
+        return priceForTicket;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public double getBasePriceForTicket() {

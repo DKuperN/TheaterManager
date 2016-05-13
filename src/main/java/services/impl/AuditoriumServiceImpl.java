@@ -30,8 +30,9 @@ public class AuditoriumServiceImpl implements AuditoriumService {
         return auditorium;
     }
 
-    public int[] getVipSeats(String aName) {
-        return new int[0];
+    public int[] getVipSeats(String aName) throws IOException {
+        AuditoriumModel auditoriumByName = getAuditoriumByName(aName);
+        return auditoriumByName.getAuditoriumVIPSeats();
     }
 
     public int getAuditoriumCapacity(String aName) {

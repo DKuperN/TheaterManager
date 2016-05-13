@@ -1,9 +1,8 @@
 package services;
 
-import models.AuditoriumModel;
-import models.EventModel;
-import models.UserModel;
+import models.TicketModel;
 
+import java.sql.Date;
 import java.util.Map;
 
 public interface BookingService {
@@ -20,17 +19,17 @@ public interface BookingService {
     /**
      * Book ticket on event for user
      * @param eventName
-     * @param seatNumber
      * @param userName
+     * @param seatNumber
      */
-    void bookTicket(String eventName, int seatNumber, String userName);
+    TicketModel bookTicket(String eventName, String userName, int seatNumber);
 
     /**
      * Get all purchased tickets for event
-     * @param eventName
      * @param auditName
+     * @param eventName
      * @return
      */
-    Map<Integer, Double> getPurchasedTicketsForEvent(String eventName, String auditName);
+    Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate);
 
 }

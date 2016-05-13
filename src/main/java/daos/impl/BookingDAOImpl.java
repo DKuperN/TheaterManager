@@ -5,7 +5,6 @@ import models.EventModel;
 import models.TicketModel;
 import models.UserModel;
 import services.impl.AuditoriumServiceImpl;
-import services.impl.BookingServiceImpl;
 import services.impl.EventServiceImpl;
 import services.impl.UserServiceImpl;
 import utils.Utils;
@@ -15,6 +14,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.jdbc.support.JdbcUtils.closeConnection;
 
 public class BookingDAOImpl implements BookingDAO {
 
@@ -54,15 +55,15 @@ public class BookingDAOImpl implements BookingDAO {
         event = eventService.getEventByName(eventName);
         user = userService.getUserByName(userName);
         TicketModel ticketModel = null;
-        Double resultPrice = utils.getResultPrice(event.getBasePriceForTicket(), isPlaceVip(event.getEventName(), placeNumber));
-        int ticketId = Integer.parseInt(null);
+        boolean placeVip = isPlaceVip(event.getEventPlace(), placeNumber);
+        Double resultPrice = utils.getResultPrice(event.getBasePriceForTicket(), placeVip, event.getRating());
+        int ticketId = 0;
 
         if(event != null && user != null) {
             String SQL_SAVE_TICKET_ORDER = "INSERT INTO BOOKTICKETS (userID, eventID, placeNumber, resultPrice) VALUES (?, ?, ?, ?);";
             try {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_SAVE_TICKET_ORDER, Statement.RETURN_GENERATED_KEYS);
-//                HashMap<Integer, Number> map = new HashMap<Integer, Number>();
                 statement.setInt(1, user.getUserId());
                 statement.setInt(2, event.getEventId());
                 statement.setInt(3, placeNumber);
@@ -86,10 +87,7 @@ public class BookingDAOImpl implements BookingDAO {
                 e.printStackTrace();
             }
 
-//            utils.executeQuery(SQL_SAVE_TICKET_ORDER, map);
-
-
-            return ticketModel = new TicketModel(ticketId, event, resultPrice);
+            return ticketModel = new TicketModel(ticketId, event, resultPrice, placeVip);
 
         } else {
             return null;
@@ -97,11 +95,60 @@ public class BookingDAOImpl implements BookingDAO {
 
     }
 
-    public Map<Integer, Double> getPurchasedTicketsForEvent(String eventName, String auditName) {
-        return null;
+    public Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate) {
+        Map<String, Object> map = null;
+
+        String GET_PURCHASED_TICKETS_FOR_EVENT =
+                "SELECT DISTINCT b.resultPrice, b.placeNumber, b.eventID FROM booktickets b, event e " +
+                        "WHERE b.eventID = (SELECT et.eventID FROM event et WHERE et.eventName = ? AND et.eventDate = ?)";
+
+        String purchasedTickets = "purchasedTickets";
+
+        String totalSumm = "totalSumm";
+        double tSumm = 0;
+
+        Connection connection = null;
+
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(GET_PURCHASED_TICKETS_FOR_EVENT);
+            ps.setString(1, eventName);
+            ps.setDate(2, eventDate);
+            ResultSet rs = ps.executeQuery();
+
+            int size = 0;
+            try {
+                rs.last();
+                size = rs.getRow();
+                rs.beforeFirst();
+            } catch(SQLException ex) {
+                System.out.println("Problem with counting rows: " + ex);
+            }
+            int[] purchasedTicketsArr = new int[size];
+            int count = 0;
+            while (rs.next()){
+                purchasedTicketsArr[count] = rs.getInt("PLACENUMBER");
+                double d = rs.getDouble("RESULTPRICE");
+                tSumm += d;
+                count ++;
+            }
+            ps.close();
+            if(size > 0) {
+                map = new HashMap<>();
+                map.put(totalSumm, tSumm);
+                map.put(purchasedTickets, purchasedTicketsArr);
+            }
+            return map;
+        } catch (SQLException e) {
+            System.out.println("FAIL: something wrong with connection or query");
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection);
+        }
+        return map;
     }
 
-    public boolean isPlaceVip(String eName, int placeNumber) {
+    public boolean isPlaceVip(String eName, int placeNumber) throws IOException {
         int[] vipSeats = auditoriumService.getVipSeats(eName);
         for (int n : vipSeats) {
             if (placeNumber == n) {
