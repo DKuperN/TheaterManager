@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:springContext.xml"})
+
 public class BookingEventTest {
     @Autowired
     private BookingServiceImpl bookingService;

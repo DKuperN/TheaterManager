@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util
+ 		    http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!--For load test data from properties-->
+    <!--<context:property-placeholder location="classpath:app.properties"/>-->
+
+    <bean id="birthdayStrategy" class="strategy.impl.BirthdayDiscountStrategyImpl" lazy-init="true"/>
+    <bean id="everyXTicketHaveYDiscountStrategy" class="strategy.impl.EveryXTicketHaveYDiscountStrategyImpl" lazy-init="true"/>
+
+
+    <util:list id="discountList" value-type="java.util.ArrayList">
+        <ref bean="birthdayStrategy" />
+        <ref bean="everyXTicketHaveYDiscountStrategy" />
+    </util:list>
+
+    <bean id="discountService" class="services.impl.DiscountServiceImpl" lazy-init="true">
+        <constructor-arg ref="discountList"/>
+    </bean>
+
+
+</beans>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import services.impl.*;
+import utils.ImportTestData;
 import utils.Utils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,6 +29,9 @@ public class ContextCreationTestCase extends TestCase {
     PriceServiceImpl priceService;
 
     @Autowired
+    ImportTestData importTestData;
+
+    @Autowired
     Utils utils;
 
     @Test
@@ -35,6 +39,12 @@ public class ContextCreationTestCase extends TestCase {
         System.out.println("AppMenuBean = " + appMenu);
         assertNotNull(appMenu);
         System.out.println("AppMenu bean is OK!");
+    }
+    @Test
+    public void importDataBean() throws Exception {
+        System.out.println("ImportTestData = " + importTestData);
+        assertNotNull(importTestData);
+        System.out.println("importTestData bean is OK!");
     }
     @Test
     public void creationServices() throws Exception {
