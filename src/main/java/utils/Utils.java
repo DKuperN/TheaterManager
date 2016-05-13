@@ -92,6 +92,23 @@ public class Utils {
         }
     }
 
+    public void executeQuery(String query, String parameter) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, String.valueOf(parameter));
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Action OK!");
+        } catch (SQLException e) {
+            System.out.println("FAIL: something wrong with connection or query");
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
     public void closeConnection(Connection connection) {
         if (connection != null) {
             try {

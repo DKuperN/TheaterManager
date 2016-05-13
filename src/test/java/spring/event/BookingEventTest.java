@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -26,17 +27,21 @@ public class BookingEventTest {
     private BookingServiceImpl bookingService;
 
     //Test data
+    @Value("${test.userName}")
+    private String userName;
     @Value("${test.eventName}")
     private String eventName;
     @Value("${test.eventDate}")
     private String seventDate;
-
-    private String userName = "test4";
-    private int seatPlaceNumber = 28;
+    @Value("${test.mainQuantityDBRows}")
+    private String mainQuantityDBRows;
 
     @Test
     public void bookingTicketTest(){
-        TicketModel ticket = bookingService.bookTicket(eventName, userName, seatPlaceNumber);
+        Random r = new Random();
+        int seatPlaceNumber = r.nextInt(100);
+
+        TicketModel ticket = bookingService.bookTicket(eventName, userName+r.nextInt(Integer.parseInt(mainQuantityDBRows)),seatPlaceNumber );
         assertNotNull(ticket);
         System.out.println("Your ticket:");
         System.out.println("ticket id:    " + ticket.getTicketId());

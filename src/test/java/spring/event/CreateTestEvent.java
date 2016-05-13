@@ -33,19 +33,14 @@ public class CreateTestEvent {
     private String ePlace;
     @Value("${test.eventDate}")
     private String seDate;
-    private Date eDate;
     @Value("${test.eventStartTime}")
     private String seStartTime;
-    private Time eStartTime;
     @Value("${test.eventEndTime}")
     private String seEndTime;
-    private Time eEndTime;
     @Value("${test.eventPrice}")
     private String sePrice;
-    private Double ePrice;
     @Value("${test.eventRating}")
     private String seRating;
-    private int eRating;
 
     //TODO clean code
 
