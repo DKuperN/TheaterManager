@@ -28,7 +28,8 @@ public class EventServiceImpl implements EventService {
 
     public void createEvent(String eventName, String eventPlace, Date eventDate, Time eventStartTime, Time eventEndTime, Double priceForTicket, int rating) {
         Serializable indate = eventDate != null ? eventDate : df.format(date);
-        eventDao.createEvent(eventName, eventPlace, (Date) indate, eventStartTime, eventEndTime, priceForTicket, rating);
+        java.sql.Date sqlDate = new java.sql.Date(eventDate.getTime());
+        eventDao.createEvent(eventName, eventPlace, sqlDate, eventStartTime, eventEndTime, priceForTicket, rating);
     }
 
     public void deleteEvent(String eventName) {

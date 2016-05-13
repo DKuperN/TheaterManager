@@ -12,7 +12,9 @@ import utils.Utils;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,24 +28,39 @@ public class CreateTestEvent {
     @Autowired
     private Utils utils;
 
-    @Value("${menu.choseAction}")
+    @Value("${test.eventName}")
     private String eName;
+    @Value("${test.eventPlace}")
+    private String ePlace;
+    @Value("${test.eventDate}")
+    private String seDate;
+    private Date eDate;
+    @Value("${test.eventStartTime}")
+    private String seStartTime;
+    private Time eStartTime;
+    @Value("${test.eventEndTime}")
+    private String seEndTime;
+    private Time eEndTime;
+    @Value("${test.eventPrice}")
+    private String sePrice;
+    private Double ePrice;
+    @Value("${test.eventRating}")
+    private String seRating;
+    private int eRating;
+
+    //TODO clean code
 
     @Test
     public void createTestEvent() throws ParseException, IOException {
         //TestData
-//        String eName = utils.getPropertyByName("test.eventName");
-//        String ePlace = utils.getPropertyByName("test.eventName");
-//        Date eDate = utils.dateFormatter(utils.getPropertyByName("test.eventDate"));
-//        Time eStartTime = utils.timeFormatter(utils.getPropertyByName("test.eventStartTime"));
-//        Time eEndTime = utils.timeFormatter(utils.getPropertyByName("test.eventEndTime"));
-//        Double ePrice = Double.parseDouble(utils.getPropertyByName("test.eventPrice"));
-//        int eRating = Integer.parseInt(utils.getPropertyByName("test.eventRating"));
+        DateFormat formatPattern = new SimpleDateFormat("yyyy-mm-dd");
+        Date eDate = formatPattern.parse(seDate);
+        Time eStartTime = utils.timeFormatter(seStartTime);
+        Time eEndTime = utils.timeFormatter(seEndTime);
+        Double ePrice = Double.parseDouble(sePrice);
+        int eRating = Integer.parseInt(seRating);
 
-        System.out.println(eName);
-
-
-        //eventService.createEvent(eName, ePlace, eDate, eStartTime, eEndTime, ePrice, eRating);
+        eventService.createEvent(eName, ePlace, eDate, eStartTime, eEndTime, ePrice, eRating);
         System.out.println("Created test Event!");
     }
 
