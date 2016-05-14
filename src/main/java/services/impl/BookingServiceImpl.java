@@ -33,6 +33,17 @@ public class BookingServiceImpl implements BookingService {
         return ticket;
     }
 
+    @Override
+    public TicketModel bookTicket(String eventName, String userName, int seatNumber, boolean enableDiscountStrategy) {
+        TicketModel ticket = null;
+        try {
+            ticket = booking.bookTicket(eventName, userName, seatNumber, enableDiscountStrategy);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ticket;
+    }
+
     public Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate) {
         return booking.getPurchasedTicketsForEvent(eventName, eventDate);
     }

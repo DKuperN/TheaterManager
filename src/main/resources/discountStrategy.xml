@@ -23,6 +23,8 @@
 
     <bean id="discountService" class="services.impl.DiscountServiceImpl" lazy-init="true">
         <constructor-arg ref="discountList"/>
+        <constructor-arg value="true"/>
+        <constructor-arg value="true"/>
     </bean>
 
 

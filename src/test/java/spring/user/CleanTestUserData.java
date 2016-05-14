@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextHierarchy({
         @ContextConfiguration(locations = {"classpath:springContext.xml"})
 })
-public class CleanTestData {
+public class CleanTestUserData {
     @Autowired
     private UserDaoImpl userDao;
     private String testName = "testUser";

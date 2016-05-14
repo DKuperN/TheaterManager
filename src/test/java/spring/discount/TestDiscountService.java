@@ -39,9 +39,9 @@ public class TestDiscountService {
         DateFormat formatPattern = new SimpleDateFormat("yyyy-mm-dd");
         Date eDate = formatPattern.parse(seDate);
 
-        int discount = discountService.getDiscount(userName, eventName, eDate, Integer.parseInt(ticketId));
+        int discount = discountService.getDiscount(userName, eventName, eDate);
         assertNotNull(discount);
-        System.out.println("Discount - " + discount);
+        System.out.println("Discount - " + discount + "%");
     }
 
 

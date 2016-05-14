@@ -35,13 +35,15 @@ public class BookingEventTest {
     private String seventDate;
     @Value("${test.mainQuantityDBRows}")
     private String mainQuantityDBRows;
+    @Value("${test.enableDiscountStrategy}")
+    private String enableDiscountStrategy;
 
     @Test
     public void bookingTicketTest(){
         Random r = new Random();
         int seatPlaceNumber = r.nextInt(100);
 
-        TicketModel ticket = bookingService.bookTicket(eventName, userName+r.nextInt(Integer.parseInt(mainQuantityDBRows)),seatPlaceNumber );
+        TicketModel ticket = bookingService.bookTicket(eventName, userName,seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
         assertNotNull(ticket);
         System.out.println("Your ticket:");
         System.out.println("ticket id:    " + ticket.getTicketId());
@@ -52,6 +54,7 @@ public class BookingEventTest {
         System.out.println("Begin:        " + ticket.getEventModel().getEventStartTime());
         System.out.println("Finish:       " + ticket.getEventModel().getEventEndTime());
         System.out.println("Ticket price: " + ticket.getResultPrice() + " popugaev!");
+        System.out.println("Discount:     " + ticket.getDiscount() + "%");
         System.out.println("*************");
     }
 

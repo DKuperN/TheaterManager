@@ -5,12 +5,15 @@ import models.EventModel;
 import models.TicketModel;
 import models.UserModel;
 import services.impl.AuditoriumServiceImpl;
+import services.impl.DiscountServiceImpl;
 import services.impl.EventServiceImpl;
 import services.impl.UserServiceImpl;
 import utils.Utils;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,17 +28,20 @@ public class BookingDAOImpl implements BookingDAO {
     private AuditoriumServiceImpl auditoriumService;
     private Utils utils;
 
+    private DiscountServiceImpl discountService;
+
     public BookingDAOImpl(DataSource dataSource, Utils utils) {
         this.dataSource = dataSource;
         this.utils = utils;
     }
 
-    public BookingDAOImpl(DataSource dataSource, UserServiceImpl userService, EventServiceImpl eventService, AuditoriumServiceImpl auditoriumService, Utils utils) {
+    public BookingDAOImpl(DataSource dataSource, UserServiceImpl userService, EventServiceImpl eventService, AuditoriumServiceImpl auditoriumService, Utils utils, DiscountServiceImpl discountService) {
         this.dataSource = dataSource;
         this.userService = userService;
         this.eventService = eventService;
         this.auditoriumService = auditoriumService;
         this.utils = utils;
+        this.discountService = discountService;
     }
 
     private EventModel event;
@@ -51,6 +57,13 @@ public class BookingDAOImpl implements BookingDAO {
         }
     }
 
+    private boolean useDiscountStrategy = false;
+
+    public TicketModel bookTicket(String eventName, String userName, int placeNumber, boolean useDiscountStrategy) throws IOException {
+        this.useDiscountStrategy = useDiscountStrategy;
+        return bookTicket(eventName, userName, placeNumber);
+    }
+
     public TicketModel bookTicket(String eventName, String userName, int placeNumber) throws IOException {
         event = eventService.getEventByName(eventName);
         user = userService.getUserByName(userName);
@@ -58,16 +71,27 @@ public class BookingDAOImpl implements BookingDAO {
         boolean placeVip = isPlaceVip(event.getEventPlace(), placeNumber);
         Double resultPrice = utils.getResultPrice(event.getBasePriceForTicket(), placeVip, event.getRating());
         int ticketId = 0;
+        int discount = 0;
+        if(useDiscountStrategy) {
+
+            //TODO  прикрутить куда-нить дату, пока хз куда
+            Date date = new Date(System.currentTimeMillis());
+
+            discount = discountService.getDiscount(userName, eventName, date);
+
+            resultPrice = resultPrice - resultPrice/100*discount;
+        }
 
         if(event != null && user != null) {
-            String SQL_SAVE_TICKET_ORDER = "INSERT INTO BOOKTICKETS (userID, eventID, placeNumber, resultPrice) VALUES (?, ?, ?, ?);";
+            String SQL_SAVE_TICKET_ORDER = "INSERT INTO BOOKTICKETS (userID, eventID, placeNumber, resultPrice, discount) VALUES (?, ?, ?, ?, ?);";
             try {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_SAVE_TICKET_ORDER, Statement.RETURN_GENERATED_KEYS);
                 statement.setInt(1, user.getUserId());
                 statement.setInt(2, event.getEventId());
                 statement.setInt(3, placeNumber);
-                statement.setDouble(4, resultPrice);
+                statement.setDouble(4, roundPrice(resultPrice));
+                statement.setInt(5, discount);
 
                 int affectedRows = statement.executeUpdate();
 
@@ -87,12 +111,16 @@ public class BookingDAOImpl implements BookingDAO {
                 e.printStackTrace();
             }
 
-            return ticketModel = new TicketModel(ticketId, event, resultPrice, placeVip);
+            return ticketModel = new TicketModel(ticketId, event, roundPrice(resultPrice), placeVip, discount);
 
         } else {
             return null;
         }
 
+    }
+
+    private double roundPrice(Double resultPrice) {
+        return new BigDecimal(resultPrice).setScale(2, RoundingMode.UP).doubleValue();
     }
 
     public Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate) {

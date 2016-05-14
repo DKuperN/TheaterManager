@@ -216,6 +216,6 @@ public class Utils {
                 break;
         }
 
-        return new BigDecimal(price).setScale(2, RoundingMode.UP).doubleValue();
+        return price;
     }
 }

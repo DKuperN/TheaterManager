@@ -24,6 +24,8 @@ public interface BookingService {
      */
     TicketModel bookTicket(String eventName, String userName, int seatNumber);
 
+    TicketModel bookTicket(String eventName, String userName, int seatNumber, boolean enableDiscountStrategy);
+
     /**
      * Get all purchased tickets for event
      * @param auditName

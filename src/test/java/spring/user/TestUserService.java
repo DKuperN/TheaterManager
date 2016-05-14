@@ -4,6 +4,7 @@ import models.UserModel;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -29,29 +30,31 @@ public class TestUserService extends AbstractTestExecutionListener {
     @Autowired
     private Utils utils;
 
-    private String testName = "testUser";
-    private String testEmail = "testUserEmail@email.em";
+    @Value("${test.userName}")
+    private String userName;
+    @Value("${test.userEmail}")
+    private String testEmail;
 
     //TODO
     //@Ignore
     //@Before
     public void beforeTestClass() throws Exception {
-        userService.registerUser(testName, testEmail);
+        userService.registerUser(userName, testEmail);
         System.out.println("Created test user!");
     }
 
     @Ignore
     //@AfterClass
     public void afterTestClass() throws Exception {
-        userService.removeUser(testName);
+        userService.removeUser(userName);
         System.out.println("Test user removed!");
     }
 
     @Test
     public void testFindUserByName() throws Exception {
 
-        UserModel userModel = userService.getUserById(userService.findUserIdByName(testName));
-        assertEquals(testName, userModel.getUserName());
+        UserModel userModel = userService.getUserById(userService.findUserIdByName(userName));
+        assertEquals(userName, userModel.getUserName());
         assertEquals(testEmail, userModel.getUserEmail());
         System.out.println("testFindUserByName:");
         printUserInfo(userModel);
@@ -60,7 +63,7 @@ public class TestUserService extends AbstractTestExecutionListener {
     @Test
     public void testFindUserByEmail() throws Exception {
         UserModel userModel = userService.getUserById(userService.findUserIdByName(testEmail));
-        assertEquals(testName, userModel.getUserName());
+        assertEquals(userName, userModel.getUserName());
         assertEquals(testEmail, userModel.getUserEmail());
         System.out.println("testFindUserByEmail:");
         printUserInfo(userModel);
@@ -68,7 +71,7 @@ public class TestUserService extends AbstractTestExecutionListener {
 
     @Test
     public void testGetUserById() throws Exception {
-        assertNotNull(userService.getUserById(userService.findUserIdByName(testName)));
+        assertNotNull(userService.getUserById(userService.findUserIdByName(userName)));
         System.out.println("test User founded!");
     }
 
@@ -85,9 +88,9 @@ public class TestUserService extends AbstractTestExecutionListener {
     }
 
     private void printUserInfo(UserModel userModel) throws IOException {
-        System.out.println(utils.getPropertyByName("menu.user.info.userid") + " " + userModel.getUserId());
-        System.out.println(utils.getPropertyByName("menu.user.info.Name") + " " + userModel.getUserName());
-        System.out.println(utils.getPropertyByName("menu.user.info.Email") + " " + userModel.getUserEmail());
-        System.out.println(utils.getPropertyByName("menu.asterix"));
+        System.out.println("User id:    " + userModel.getUserId());
+        System.out.println("User name:  " + userModel.getUserName());
+        System.out.println("User Email: " + userModel.getUserEmail());
+        System.out.println("***************");
     }
 }

@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `booktickets` (
   `eventID` int(11) NOT NULL DEFAULT '0',
   `placeNumber` int(11) NOT NULL DEFAULT '0',
   `resultPrice` double NOT NULL DEFAULT '0',
+  `discount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`ticketID`),
   KEY `FK_bookTickets_users` (`userID`),
   KEY `FK_bookTickets_event` (`eventID`),

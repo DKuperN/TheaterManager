@@ -5,6 +5,8 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd"
         default-lazy-init="true">
 
+    <import resource="discountStrategy.xml"/>
+
     <!--DAO-->
     <bean id="userDao" parent="auditoriumService"  class="daos.impl.UserDaoImpl">
         <constructor-arg ref="dataSource"/>
@@ -18,6 +20,7 @@
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>
         <constructor-arg ref="auditoriumService"/>
+        <constructor-arg ref="discountService"/>
     </bean>
 
 </beans>
