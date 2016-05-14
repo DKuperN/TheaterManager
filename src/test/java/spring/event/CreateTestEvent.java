@@ -42,8 +42,6 @@ public class CreateTestEvent {
     @Value("${test.eventRating}")
     private String seRating;
 
-    //TODO clean code
-
     @Test
     public void createTestEvent() throws ParseException, IOException {
         //TestData

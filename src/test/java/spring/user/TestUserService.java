@@ -35,8 +35,7 @@ public class TestUserService extends AbstractTestExecutionListener {
     @Value("${test.userEmail}")
     private String testEmail;
 
-    //TODO
-    //@Ignore
+    @Ignore
     //@Before
     public void beforeTestClass() throws Exception {
         userService.registerUser(userName, testEmail);

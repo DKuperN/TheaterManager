@@ -5,12 +5,6 @@ package models;
  */
 public class UserModel {
 
-    //TODO maybe not needed
-    public final static String TYPECODE = "User";
-
-    //TODO maybe not needed
-    public static final String ORDERS = "orders";
-
     private String userName;
 
     private String userEmail;

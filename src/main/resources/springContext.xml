@@ -48,12 +48,4 @@
 
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
 
-    <bean id="importTestData" class="utils.ImportTestData" lazy-init="true">
-        <constructor-arg ref="dataSource"/>
-        <constructor-arg ref="userService"/>
-        <constructor-arg ref="eventService"/>
-        <constructor-arg ref="auditoriumService"/>
-        <constructor-arg ref="utils"/>
-    </bean>
-
 </beans>
