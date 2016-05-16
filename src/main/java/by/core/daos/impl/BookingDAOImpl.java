@@ -1,6 +1,7 @@
 package by.core.daos.impl;
 
 import by.core.daos.BookingDAO;
+import by.core.models.BookingModel;
 import by.core.models.EventModel;
 import by.core.models.TicketModel;
 import by.core.models.UserModel;
@@ -24,33 +25,23 @@ import static org.springframework.jdbc.support.JdbcUtils.closeConnection;
 public class BookingDAOImpl implements BookingDAO {
 
     private DataSource dataSource;
-    private UserServiceImpl userService;
-    private EventServiceImpl eventService;
-    private AuditoriumServiceImpl auditoriumService;
     private Utils utils;
-
-    private DiscountServiceImpl discountService;
-
-    public BookingDAOImpl(DataSource dataSource, Utils utils) {
-        this.dataSource = dataSource;
-        this.utils = utils;
-    }
-
-    public BookingDAOImpl(DataSource dataSource, UserServiceImpl userService, EventServiceImpl eventService, AuditoriumServiceImpl auditoriumService, Utils utils, DiscountServiceImpl discountService) {
-        this.dataSource = dataSource;
-        this.userService = userService;
-        this.eventService = eventService;
-        this.auditoriumService = auditoriumService;
-        this.utils = utils;
-        this.discountService = discountService;
-    }
-
+    private BookingModel bookingModel;
     private EventModel event;
     private UserModel user;
 
+    public BookingDAOImpl() {}
+
+    public BookingDAOImpl(BookingModel bookingModel, DataSource dataSource, Utils utils, boolean useDiscountStrategy) {
+        this.bookingModel = bookingModel;
+        this.dataSource = dataSource;
+        this.utils = utils;
+        this.useDiscountStrategy = useDiscountStrategy;
+    }
+
     public Double getBaseTicketPrice(String eventName, String userName) {
-        event = eventService.getEventByName(eventName);
-        user = userService.getUserByName(userName);
+        event = bookingModel.getEventModel();
+        user = bookingModel.getUserModel();
         if(event != null && user != null){
             return event.getBasePriceForTicket();
         } else {
@@ -60,26 +51,20 @@ public class BookingDAOImpl implements BookingDAO {
 
     private boolean useDiscountStrategy = false;
 
-    public TicketModel bookTicket(String eventName, String userName, int placeNumber, boolean useDiscountStrategy) throws IOException {
+    public TicketModel bookTicket(BookingModel bookingModel, int placeNumber, boolean useDiscountStrategy) throws IOException {
         this.useDiscountStrategy = useDiscountStrategy;
-        return bookTicket(eventName, userName, placeNumber);
+        return bookTicket(bookingModel, placeNumber);
     }
 
-    public TicketModel bookTicket(String eventName, String userName, int placeNumber) throws IOException {
-        event = eventService.getEventByName(eventName);
-        user = userService.getUserByName(userName);
+    public TicketModel bookTicket(BookingModel bookingModel, int placeNumber) throws IOException {
+        event = bookingModel.getEventModel();
+        user = bookingModel.getUserModel();
         TicketModel ticketModel = null;
-        boolean placeVip = isPlaceVip(event.getEventPlace(), placeNumber);
-        Double resultPrice = utils.getResultPrice(event.getBasePriceForTicket(), placeVip, event.getRating());
+        Double resultPrice = utils.getResultPrice(event.getBasePriceForTicket(), bookingModel.isSeatVip(), event.getRating());
         int ticketId = 0;
         int discount = 0;
         if(useDiscountStrategy) {
-
-            //TODO  прикрутить куда-нить дату, пока хз куда
-            Date date = new Date(System.currentTimeMillis());
-
-            discount = discountService.getDiscount(userName, eventName, date);
-
+            discount = bookingModel.getDiscount();
             resultPrice = resultPrice - resultPrice/100*discount;
         }
 
@@ -112,7 +97,7 @@ public class BookingDAOImpl implements BookingDAO {
                 e.printStackTrace();
             }
 
-            return ticketModel = new TicketModel(ticketId, event, roundPrice(resultPrice), placeVip, discount);
+            return ticketModel = new TicketModel(ticketId, event, roundPrice(resultPrice), bookingModel.isSeatVip(), discount);
 
         } else {
             return null;
@@ -175,15 +160,5 @@ public class BookingDAOImpl implements BookingDAO {
             closeConnection(connection);
         }
         return map;
-    }
-
-    public boolean isPlaceVip(String eName, int placeNumber) throws IOException {
-        int[] vipSeats = auditoriumService.getVipSeats(eName);
-        for (int n : vipSeats) {
-            if (placeNumber == n) {
-                return true;
-            }
-        }
-        return false;
     }
 }

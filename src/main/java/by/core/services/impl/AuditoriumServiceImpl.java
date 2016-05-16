@@ -45,4 +45,15 @@ public class AuditoriumServiceImpl implements AuditoriumService {
         return 0;
     }
 
+
+    public boolean isPlaceVip(String eventName, int placeNumber) throws IOException {
+        int[] vipSeats = getVipSeats(eventName);
+        for (int n : vipSeats) {
+            if (placeNumber == n) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

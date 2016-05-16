@@ -1,14 +1,18 @@
 package spring.event;
 
+import by.annotationbeans.AnnotationBeans;
+import by.core.models.BookingModel;
 import by.core.models.TicketModel;
+import by.core.services.impl.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import by.core.services.impl.BookingServiceImpl;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,30 +24,41 @@ import java.util.Random;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:springXMLContext.xml"})
-
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class BookingEventTest {
     @Autowired
     private BookingServiceImpl bookingService;
+    @Autowired
+    private UserServiceImpl userService;
+    @Autowired
+    private EventServiceImpl eventService;
+    @Autowired
+    private AuditoriumServiceImpl auditoriumService;
+    @Autowired
+    Environment environment;
+    @Autowired
+    DiscountServiceImpl discountService;
 
-    //Test data
-    @Value("${test.userName}")
-    private String userName;
-    @Value("${test.eventName}")
-    private String eventName;
-    @Value("${test.eventDate}")
-    private String seventDate;
-    @Value("${test.mainQuantityDBRows}")
-    private String mainQuantityDBRows;
-    @Value("${test.enableDiscountStrategy}")
-    private String enableDiscountStrategy;
 
     @Test
-    public void bookingTicketTest(){
+    public void bookingTicketTest() throws IOException {
+        String userName = environment.getProperty("test.userName");
+        String eventName = environment.getProperty("test.eventName");
+        String enableDiscountStrategy = environment.getProperty("test.enableDiscountStrategy");
+
+        BookingModel bookingModel = bookingService.getBookingModel(
+                userService.getUserByName(userName),
+                eventService.getEventByName(eventName),
+                true,
+                discountService.getDiscount(userName, eventName, new java.sql.Date(System.currentTimeMillis()))
+                );
+
         Random r = new Random();
         int seatPlaceNumber = r.nextInt(100);
 
-        TicketModel ticket = bookingService.bookTicket(eventName, userName,seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
+        boolean placeVip = auditoriumService.isPlaceVip(eventName, seatPlaceNumber);
+
+        TicketModel ticket = bookingService.bookTicket(bookingModel, seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
         assertNotNull(ticket);
         System.out.println("Your ticket:");
         System.out.println("ticket id:    " + ticket.getTicketId());
@@ -60,6 +75,9 @@ public class BookingEventTest {
 
     @Test
     public void getPurchasedTicketsForEvent() throws ParseException {
+        String eventName = environment.getProperty("test.eventName");
+        String seventDate = environment.getProperty("test.eventDate");
+
         DateFormat formatPattern = new SimpleDateFormat("yyyy-mm-dd");
         Date eDate = formatPattern.parse(seventDate);
 

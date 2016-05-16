@@ -37,7 +37,6 @@ public class GenerateTestData {
     @Test
     public void generateTestData() throws Exception {
         String userName = environment.getProperty("test.userName");
-        String userEmail = environment.getProperty("test.userEmail");
         String rowsQuantity = environment.getProperty("test.mainQuantityDBRows");
         String events = environment.getProperty("test.base.events");
         String eventsPlaces = environment.getProperty("test.base.eventsPlaces");

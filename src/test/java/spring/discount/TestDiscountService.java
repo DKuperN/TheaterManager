@@ -1,5 +1,6 @@
 package spring.discount;
 
+import by.annotationbeans.AnnotationBeans;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.Date;
 import static junit.framework.TestCase.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:discountStrategy.xml"})
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class TestDiscountService {
 
     @Autowired

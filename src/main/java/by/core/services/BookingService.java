@@ -1,37 +1,23 @@
 package by.core.services;
 
+import by.core.models.BookingModel;
+import by.core.models.EventModel;
 import by.core.models.TicketModel;
+import by.core.models.UserModel;
 
 import java.sql.Date;
 import java.util.Map;
 
 public interface BookingService {
 
-    /**
-     * Returns total price for buying all tickets for specified event on specific date and time for specified seats.
-     * @param eventName
-     * @param userName
-     * @param seatNumber
-     * @return
-     */
     Double getTicketPrice(String eventName, String userName, int seatNumber);
 
-    /**
-     * Book ticket on event for user
-     * @param eventName
-     * @param userName
-     * @param seatNumber
-     */
-    TicketModel bookTicket(String eventName, String userName, int seatNumber);
+    TicketModel bookTicket(BookingModel bookingModel, int seatNumber);
 
-    TicketModel bookTicket(String eventName, String userName, int seatNumber, boolean enableDiscountStrategy);
+    TicketModel bookTicket(BookingModel bookingModel, int seatNumber, boolean enableDiscountStrategy);
 
-    /**
-     * Get all purchased tickets for event
-     * @param auditName
-     * @param eventName
-     * @return
-     */
     Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate);
+
+    BookingModel getBookingModel(UserModel userModel, EventModel eventModel, boolean isSeatVip, int discount);
 
 }

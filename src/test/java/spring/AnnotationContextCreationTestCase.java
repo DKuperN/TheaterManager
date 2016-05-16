@@ -39,7 +39,7 @@ public class AnnotationContextCreationTestCase {
         assertNotNull(userService);
 //        System.out.println("BookingServiceBean = " + bookingService);
 //        assertNotNull(bookingService);
-//        System.out.println("AuditoriumServiceBean = " + auditoriumService);
+        System.out.println("AuditoriumServiceBean = " + auditoriumService);
         assertNotNull(auditoriumService);
         System.out.println("All service beans are OK!");
     }

@@ -11,5 +11,6 @@ public interface AuditoriumService {
     AuditoriumModel getAuditoriumByName(String aName) throws IOException;
     int[]getVipSeats(String aName) throws IOException;
     int getAuditoriumCapacity(String aName);
+    boolean isPlaceVip(String eName, int placeNumber) throws IOException;
 
 }

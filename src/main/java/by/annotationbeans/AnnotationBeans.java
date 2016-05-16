@@ -23,7 +23,7 @@ import java.util.Date;
 
 @Configuration
 @Component
-@ComponentScan(basePackages = {"by/core", "by/utils"})
+@ComponentScan(basePackages = {"by.core", "by.utils"})
 @PropertySource({"classpath:app.properties"})
 public class AnnotationBeans {
 
@@ -50,18 +50,18 @@ public class AnnotationBeans {
     public AuditoriumServiceImpl auditoriumService(){
         return new AuditoriumServiceImpl(utils());
     }
-//    @Bean
-//    public BookingServiceImpl bookingService(){
-//        return new BookingServiceImpl(bookingDAO(), utils());
-//    }
-//    @Bean
-//    public BirthdayDiscountStrategyImpl birthdayDiscountStrategy() {
-//        return new BirthdayDiscountStrategyImpl();
-//    }
-//    @Bean
-//    public EveryXTicketHaveYDiscountStrategyImpl everyXTicketHaveYDiscountStrategy() {
-//        return new EveryXTicketHaveYDiscountStrategyImpl();
-//    }
+    @Bean
+    public BookingServiceImpl bookingService(){
+        return new BookingServiceImpl(bookingDAO(), utils());
+    }
+    @Bean
+    public BirthdayDiscountStrategyImpl birthdayDiscountStrategy() {
+        return new BirthdayDiscountStrategyImpl();
+    }
+    @Bean
+    public EveryXTicketHaveYDiscountStrategyImpl everyXTicketHaveYDiscountStrategy() {
+        return new EveryXTicketHaveYDiscountStrategyImpl();
+    }
 //    @Bean
 //    public DiscountServiceImpl discountService(){
 //        ArrayList<DiscountServiceStrategy> serviceStrategy = new ArrayList<>();
@@ -77,12 +77,12 @@ public class AnnotationBeans {
     public UserServiceImpl userService(){
         return new UserServiceImpl(userDao());
     }
-//
-//    //DAO
-//    @Bean
-//    public BookingDAOImpl bookingDAO(){
-//        return new BookingDAOImpl(dataSource(), userService(), eventService(), auditoriumService(), utils(), discountService());
-//    }
+
+    //DAO
+    @Bean
+    public BookingDAOImpl bookingDAO(){
+        return new BookingDAOImpl();
+    }
     @Bean
     public EventDaoImpl eventDao(){
         return new EventDaoImpl(dataSource(), utils());

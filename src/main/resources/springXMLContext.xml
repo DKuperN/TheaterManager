@@ -26,20 +26,20 @@
     </bean>
 
     <!--Services-->
-    <bean id="userService" class="core.services.impl.UserServiceImpl">
+    <bean id="userService" class="by.core.services.impl.UserServiceImpl">
         <constructor-arg ref="userDao"/>
     </bean>
-    <bean id="eventService" class="core.services.impl.EventServiceImpl">
+    <bean id="eventService" class="by.core.services.impl.EventServiceImpl">
         <constructor-arg ref="eventDao"/>
         <constructor-arg>
             <bean class="java.util.Date"/>
         </constructor-arg>
         <constructor-arg ref="dateFormat"/>
     </bean>
-    <bean id="auditoriumService" class="core.services.impl.AuditoriumServiceImpl">
+    <bean id="auditoriumService" class="by.core.services.impl.AuditoriumServiceImpl">
         <constructor-arg ref="utils"/>
     </bean>
-    <bean id="bookingService" class="core.services.impl.BookingServiceImpl">
+    <bean id="bookingService" class="by.core.services.impl.BookingServiceImpl">
         <constructor-arg ref="bookingDao"/>
         <constructor-arg ref="utils"/>
     </bean>
