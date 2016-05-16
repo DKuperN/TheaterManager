@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <import resource="mysql-connection.xml"/>
+    <import resource="dao.xml"/>
+    <import resource="utils.xml"/>
+    <!--<import resource="menu-loader.xml"/>-->
+    <context:property-placeholder location="classpath:app.properties"/>
+
+    <bean id="appMenu" parent="auditoriumService" class="by.ui.consoleui.AppMenu">
+        <constructor-arg ref="userService"/>
+        <constructor-arg ref="eventService"/>
+    </bean>
+
+    <bean id="theaterManagerApp" class="by.StartConsoleApp">
+        <constructor-arg ref="appMenu"/>
+    </bean>
+
+    <!--Services-->
+    <bean id="userService" class="core.services.impl.UserServiceImpl">
+        <constructor-arg ref="userDao"/>
+    </bean>
+    <bean id="eventService" class="core.services.impl.EventServiceImpl">
+        <constructor-arg ref="eventDao"/>
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+    </bean>
+    <bean id="auditoriumService" class="core.services.impl.AuditoriumServiceImpl">
+        <constructor-arg ref="utils"/>
+    </bean>
+    <bean id="bookingService" class="core.services.impl.BookingServiceImpl">
+        <constructor-arg ref="bookingDao"/>
+        <constructor-arg ref="utils"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
+
+</beans>

@@ -1,16 +1,17 @@
 package spring.user;
 
-import core.models.UserModel;
-import org.junit.*;
+import by.annotationbeans.AnnotationBeans;
+import by.core.models.UserModel;
+import by.core.services.impl.UserServiceImpl;
+import by.utils.Utils;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
-import core.services.impl.UserServiceImpl;
-import utils.Utils;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,39 +20,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({
-        @ContextConfiguration(locations = {"classpath:springContext.xml"})
-})
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class TestUserService extends AbstractTestExecutionListener {
 
     @Autowired
     private UserServiceImpl userService;
 
     @Autowired
-    private Utils utils;
-
-    @Value("${test.userName}")
-    private String userName;
-    @Value("${test.userEmail}")
-    private String testEmail;
-
-    @Ignore
-    //@Before
-    public void beforeTestClass() throws Exception {
-        userService.registerUser(userName, testEmail);
-        System.out.println("Created test user!");
-    }
-
-    @Ignore
-    //@AfterClass
-    public void afterTestClass() throws Exception {
-        userService.removeUser(userName);
-        System.out.println("Test user removed!");
-    }
+    Environment environment;
 
     @Test
     public void testFindUserByName() throws Exception {
-
+        String userName = environment.getProperty("test.userName");
+        String testEmail = environment.getProperty("test.userEmail");
         UserModel userModel = userService.getUserById(userService.findUserIdByName(userName));
         assertEquals(userName, userModel.getUserName());
         assertEquals(testEmail, userModel.getUserEmail());
@@ -61,6 +42,8 @@ public class TestUserService extends AbstractTestExecutionListener {
 
     @Test
     public void testFindUserByEmail() throws Exception {
+        String userName = environment.getProperty("test.userName");
+        String testEmail = environment.getProperty("test.userEmail");
         UserModel userModel = userService.getUserById(userService.findUserIdByName(testEmail));
         assertEquals(userName, userModel.getUserName());
         assertEquals(testEmail, userModel.getUserEmail());
@@ -70,6 +53,8 @@ public class TestUserService extends AbstractTestExecutionListener {
 
     @Test
     public void testGetUserById() throws Exception {
+        String userName = environment.getProperty("test.userName");
+        String testEmail = environment.getProperty("test.userEmail");
         assertNotNull(userService.getUserById(userService.findUserIdByName(userName)));
         System.out.println("test User founded!");
     }
@@ -82,7 +67,7 @@ public class TestUserService extends AbstractTestExecutionListener {
         for (UserModel model: users){
             printUserInfo(model);
         }
-        System.out.println(utils.getPropertyByName("menu.asterix"));
+        System.out.println("***************");
 
     }
 

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import core.services.impl.EventServiceImpl;
-import utils.Utils;
+import by.core.services.impl.EventServiceImpl;
+import by.utils.Utils;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:springContext.xml"})
+@ContextConfiguration(locations = {"classpath:springXMLContext.xml"})
 public class CreateTestEvent {
 
     @Autowired
