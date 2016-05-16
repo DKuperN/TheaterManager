@@ -1,13 +1,13 @@
 package spring;
 
-import consoleui.AppMenu;
+import ui.consoleui.AppMenu;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import services.impl.*;
+import core.services.impl.*;
 import utils.Utils;
 
 @RunWith(SpringJUnit4ClassRunner.class)

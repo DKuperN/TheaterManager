@@ -1,4 +1,4 @@
-import consoleui.AppMenu;
+import ui.consoleui.AppMenu;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

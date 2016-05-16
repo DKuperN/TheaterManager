@@ -7,17 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import services.impl.EventServiceImpl;
-import services.impl.UserServiceImpl;
+import core.services.impl.EventServiceImpl;
+import core.services.impl.UserServiceImpl;
 import utils.Utils;
 
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Generate TestData
@@ -104,6 +102,6 @@ public class GenerateTestData {
         }
         System.out.println("Test data are created successfully!!!!!!!!");
         System.out.println("*************");
-        System.out.println("Run other tests for test application services");
+        System.out.println("Run other tests for test application core.services");
     }
 }

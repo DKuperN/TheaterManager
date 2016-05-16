@@ -16,7 +16,7 @@
     <!--<import resource="menu-loader.xml"/>-->
     <context:property-placeholder location="classpath:app.properties"/>
 
-    <bean id="appMenu" parent="auditoriumService" class="consoleui.AppMenu">
+    <bean id="appMenu" parent="auditoriumService" class="ui.consoleui.AppMenu">
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>
     </bean>
@@ -26,23 +26,23 @@
     </bean>
 
     <!--Services-->
-    <bean id="userService" class="services.impl.UserServiceImpl">
+    <bean id="userService" class="core.services.impl.UserServiceImpl">
         <constructor-arg ref="userDao"/>
     </bean>
-    <bean id="eventService" class="services.impl.EventServiceImpl">
+    <bean id="eventService" class="core.services.impl.EventServiceImpl">
         <constructor-arg ref="eventDao"/>
         <constructor-arg>
             <bean class="java.util.Date"/>
         </constructor-arg>
         <constructor-arg ref="dateFormat"/>
     </bean>
-    <bean id="auditoriumService" class="services.impl.AuditoriumServiceImpl">
+    <bean id="auditoriumService" class="core.services.impl.AuditoriumServiceImpl">
         <constructor-arg ref="utils"/>
     </bean>
-    <bean id="bookingService" parent="priceService" class="services.impl.BookingServiceImpl">
+    <bean id="bookingService" parent="priceService" class="core.services.impl.BookingServiceImpl">
         <constructor-arg ref="utils"/>
     </bean>
-    <bean id="priceService" class="services.impl.PriceServiceImpl">
+    <bean id="priceService" class="core.services.impl.PriceServiceImpl">
         <constructor-arg ref="bookingDao"/>
     </bean>
 

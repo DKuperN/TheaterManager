@@ -8,14 +8,14 @@
     <import resource="discountStrategy.xml"/>
 
     <!--DAO-->
-    <bean id="userDao" parent="auditoriumService"  class="daos.impl.UserDaoImpl">
+    <bean id="userDao" parent="auditoriumService"  class="core.daos.impl.UserDaoImpl">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="eventDao" parent="auditoriumService"  class="daos.impl.EventDaoImpl" scope="prototype">
+    <bean id="eventDao" parent="auditoriumService" class="core.daos.impl.EventDaoImpl" scope="prototype">
         <constructor-arg ref="dataSource"/>
     </bean>
-    <bean id="bookingDao" parent="auditoriumService" class="daos.impl.BookingDAOImpl" scope="prototype">
+    <bean id="bookingDao" parent="auditoriumService" class="core.daos.impl.BookingDAOImpl" scope="prototype">
         <constructor-arg ref="dataSource"/>
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>

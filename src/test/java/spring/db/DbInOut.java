@@ -1,7 +1,6 @@
 package spring.db;
 
-import daos.impl.EventDaoImpl;
-import daos.impl.UserDaoImpl;
+import core.daos.impl.EventDaoImpl;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

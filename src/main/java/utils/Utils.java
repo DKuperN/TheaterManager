@@ -1,14 +1,12 @@
 package utils;
 
-import models.AuditoriumModel;
-import models.UserModel;
+import core.models.AuditoriumModel;
+import core.models.UserModel;
 
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.*;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -160,7 +158,7 @@ public class Utils {
     public Map<String, AuditoriumModel> loadAuditoriumsFromProperties() throws IOException {
         Properties properties = new Properties();
         InputStream stream = getClass().getClassLoader().getResourceAsStream("auditoriums/auditoriumslist.properties");
-        Map<String, AuditoriumModel> auditoriumModelList = new HashMap<String, models.AuditoriumModel>();
+        Map<String, AuditoriumModel> auditoriumModelList = new HashMap<String, core.models.AuditoriumModel>();
 
         Properties auditProperties = new Properties();
         AuditoriumModel auditoriumModel = null;

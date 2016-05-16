@@ -12,8 +12,8 @@
     <!--For load test data from properties-->
     <!--<context:property-placeholder location="classpath:app.properties"/>-->
 
-    <bean id="birthdayStrategy" class="strategy.impl.BirthdayDiscountStrategyImpl" lazy-init="true"/>
-    <bean id="everyXTicketHaveYDiscountStrategy" class="strategy.impl.EveryXTicketHaveYDiscountStrategyImpl" lazy-init="true"/>
+    <bean id="birthdayStrategy" class="core.strategy.impl.BirthdayDiscountStrategyImpl" lazy-init="true"/>
+    <bean id="everyXTicketHaveYDiscountStrategy" class="core.strategy.impl.EveryXTicketHaveYDiscountStrategyImpl" lazy-init="true"/>
 
 
     <util:list id="discountList" value-type="java.util.ArrayList">
@@ -21,7 +21,7 @@
         <ref bean="everyXTicketHaveYDiscountStrategy" />
     </util:list>
 
-    <bean id="discountService" class="services.impl.DiscountServiceImpl" lazy-init="true">
+    <bean id="discountService" class="core.services.impl.DiscountServiceImpl" lazy-init="true">
         <constructor-arg ref="discountList"/>
         <constructor-arg value="true"/>
         <constructor-arg value="true"/>
