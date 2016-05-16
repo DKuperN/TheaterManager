@@ -1,6 +1,7 @@
 package spring.user;
 
-import core.daos.impl.UserDaoImpl;
+import by.annotationbeans.AnnotationBeans;
+import by.core.daos.impl.UserDaoImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created by Denis on 05.05.2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({
-        @ContextConfiguration(locations = {"classpath:springContext.xml"})
-})
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class CleanTestUserData {
     @Autowired
     private UserDaoImpl userDao;

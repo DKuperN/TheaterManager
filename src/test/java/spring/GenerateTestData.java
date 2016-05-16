@@ -1,15 +1,15 @@
 package spring;
 
+import by.annotationbeans.AnnotationBeans;
+import by.core.services.impl.EventServiceImpl;
+import by.core.services.impl.UserServiceImpl;
+import by.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import core.services.impl.EventServiceImpl;
-import core.services.impl.UserServiceImpl;
-import utils.Utils;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -22,9 +22,7 @@ import java.util.Map;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({
-        @ContextConfiguration(locations = {"classpath:springContext.xml"})
-})
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class GenerateTestData {
 
     @Autowired
@@ -33,36 +31,27 @@ public class GenerateTestData {
     private UserServiceImpl userService;
     @Autowired
     private Utils utils;
-
-    @Value("${test.userName}")
-    private String userName;
-    @Value("${test.userEmail}")
-    private String userEmail;
-    @Value("${test.mainQuantityDBRows}")
-    private String rowsQuantity;
-    @Value("${test.base.events}")
-    private String events;
-    @Value("${test.base.eventsPlaces}")
-    private String eventsPlaces;
-    @Value("${test.base.eventsDates}")
-    private String eventsDates;
-    @Value("${test.base.eventStartTimes}")
-    private String eventStartTimes;
-    @Value("${test.base.eventEndTimes}")
-    private String eventEndTimes;
-    @Value("${test.base.eventPrices}")
-    private String eventPrices;
-    @Value("${test.base.eventRating}")
-    private String eventRating;
-
+    @Autowired
+    Environment environment;
 
     @Test
     public void generateTestData() throws Exception {
+        String userName = environment.getProperty("test.userName");
+        String userEmail = environment.getProperty("test.userEmail");
+        String rowsQuantity = environment.getProperty("test.mainQuantityDBRows");
+        String events = environment.getProperty("test.base.events");
+        String eventsPlaces = environment.getProperty("test.base.eventsPlaces");
+        String eventsDates = environment.getProperty("test.base.eventsDates");
+        String eventStartTimes = environment.getProperty("test.base.eventStartTimes");
+        String eventEndTimes = environment.getProperty("test.base.eventEndTimes");
+        String eventPrices = environment.getProperty("test.base.eventPrices");
+        String eventRating = environment.getProperty("test.base.eventRating");
+
        /**
          * Добавление пользователей
          */
         for (int i = 0; i < Integer.parseInt(rowsQuantity); i++){
-            userService.registerUser(userName+i, userEmail+i+"@test.tt");
+            userService.registerUser(userName+i, userName+i+"@test.tt");
         }
 
         /**
