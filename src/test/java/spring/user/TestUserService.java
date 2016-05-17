@@ -14,7 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -55,8 +57,10 @@ public class TestUserService extends AbstractTestExecutionListener {
     public void testGetUserById() throws Exception {
         String userName = environment.getProperty("test.userName");
         String testEmail = environment.getProperty("test.userEmail");
-        assertNotNull(userService.getUserById(userService.findUserIdByName(userName)));
-        System.out.println("test User founded!");
+        UserModel userModel = userService.getUserById(userService.findUserIdByName(userName));
+        assertNotNull(userModel);
+        System.out.println("testFindUserByEmail:");
+        printUserInfo(userModel);
     }
 
     @Test
@@ -75,6 +79,9 @@ public class TestUserService extends AbstractTestExecutionListener {
         System.out.println("User id:    " + userModel.getUserId());
         System.out.println("User name:  " + userModel.getUserName());
         System.out.println("User Email: " + userModel.getUserEmail());
+        if(userModel.getBookedTickets() != null){
+            System.out.println("Users tickets: " + userModel.getBookedTickets().toString());
+        }
         System.out.println("***************");
     }
 }
