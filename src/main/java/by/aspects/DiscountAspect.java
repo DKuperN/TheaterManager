@@ -21,6 +21,8 @@ public class DiscountAspect {
 
     private Map<Integer, Integer> counter;
 
+    //TODO для подсчета скидок конкретному пользоваетля будет использоваться тот же поинткат, только на вывод результата надо будет проверку по userID добавить
+
     @Pointcut("execution(* by.core.services.impl.BookingServiceImpl.bookTicketModel(..))")
     private void countTotalDiscountTime(){}
     @AfterReturning(

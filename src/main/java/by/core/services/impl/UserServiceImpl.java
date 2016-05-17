@@ -33,7 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserModel getUserById(int userId) {
-        return userDao.getUserById(userId);
+        UserModel userModel = userDao.getUserById(userId);
+        populateUserModel(userModel, userId);
+        return userModel;
+    }
+
+    private void populateUserModel(UserModel userModel, int userId) {
+        userModel.setBookedTickets(userDao.getUsersTickets(userId));
     }
 
     public List<UserModel> getAllUsers() {
