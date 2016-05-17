@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import by.utils.Utils;
 
@@ -16,15 +17,18 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AnnotationBeans.class})
+@ContextHierarchy({
+        @ContextConfiguration(locations = {"classpath:discountStrategy.xml"}),
+        @ContextConfiguration(classes = {AnnotationBeans.class})
+})
 
 public class AnnotationContextCreationTestCase {
     @Autowired
     private EventServiceImpl eventService;
     @Autowired
     private UserServiceImpl userService;
-//    @Autowired
-//    private BookingServiceImpl bookingService;
+    @Autowired
+    private BookingServiceImpl bookingService;
     @Autowired
     private AuditoriumServiceImpl auditoriumService;
 
@@ -37,9 +41,9 @@ public class AnnotationContextCreationTestCase {
         assertNotNull(eventService);
         System.out.println("UserServiceBean = " + userService);
         assertNotNull(userService);
-//        System.out.println("BookingServiceBean = " + bookingService);
-//        assertNotNull(bookingService);
-//        System.out.println("AuditoriumServiceBean = " + auditoriumService);
+        System.out.println("BookingServiceBean = " + bookingService);
+        assertNotNull(bookingService);
+        System.out.println("AuditoriumServiceBean = " + auditoriumService);
         assertNotNull(auditoriumService);
         System.out.println("All service beans are OK!");
     }

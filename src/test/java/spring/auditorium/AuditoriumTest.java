@@ -1,6 +1,7 @@
 package spring.auditorium;
 
 
+import by.annotationbeans.AnnotationBeans;
 import by.core.models.AuditoriumModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:springXMLContext.xml"})
-@ContextConfiguration(locations = {"classpath:springAnnotationContext.xml"})
-
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class AuditoriumTest {
     @Autowired
     private AuditoriumServiceImpl auditoriumService;

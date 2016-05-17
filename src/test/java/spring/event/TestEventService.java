@@ -1,5 +1,6 @@
 package spring.event;
 
+import by.annotationbeans.AnnotationBeans;
 import by.core.models.EventModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:springXMLContext.xml"})
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class TestEventService {
 
     @Autowired

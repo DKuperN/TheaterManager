@@ -11,7 +11,7 @@
     <bean id="propertyLoader" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:menu.properties</value>
+                <value>classpath:app.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true" />

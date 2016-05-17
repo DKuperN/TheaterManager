@@ -1,9 +1,11 @@
 package spring.event;
 
+import by.annotationbeans.AnnotationBeans;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import by.core.services.impl.EventServiceImpl;
@@ -17,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:springXMLContext.xml"})
+@ContextConfiguration(classes = {AnnotationBeans.class})
 public class CreateTestEvent {
 
     @Autowired
@@ -25,24 +27,19 @@ public class CreateTestEvent {
 
     @Autowired
     private Utils utils;
-
-    @Value("${test.eventName}")
-    private String eName;
-    @Value("${test.eventPlace}")
-    private String ePlace;
-    @Value("${test.eventDate}")
-    private String seDate;
-    @Value("${test.eventStartTime}")
-    private String seStartTime;
-    @Value("${test.eventEndTime}")
-    private String seEndTime;
-    @Value("${test.eventPrice}")
-    private String sePrice;
-    @Value("${test.eventRating}")
-    private String seRating;
+    @Autowired
+    Environment environment;
 
     @Test
     public void createTestEvent() throws ParseException, IOException {
+        String eName = environment.getProperty("test.eventName");
+        String ePlace = environment.getProperty("test.eventPlace");
+        String seDate = environment.getProperty("test.eventDate");
+        String seStartTime = environment.getProperty("test.eventStartTime");
+        String seEndTime = environment.getProperty("test.eventEndTime");
+        String sePrice = environment.getProperty("test.eventPrice");
+        String seRating = environment.getProperty("test.eventRating");
+
         //TestData
         DateFormat formatPattern = new SimpleDateFormat("yyyy-mm-dd");
         Date eDate = formatPattern.parse(seDate);

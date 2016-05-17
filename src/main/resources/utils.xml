@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-lazy-init="true">
 
-    <bean id="utils" class="utils.Utils" lazy-init="true">
+    <bean id="utils" class="by.utils.Utils" lazy-init="true">
         <constructor-arg ref="dataSource"/>
     </bean>
 

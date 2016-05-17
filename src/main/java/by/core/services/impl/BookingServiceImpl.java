@@ -1,7 +1,11 @@
 package by.core.services.impl;
 
 import by.core.daos.impl.BookingDAOImpl;
+import by.core.models.BookingModel;
+import by.core.models.EventModel;
 import by.core.models.TicketModel;
+import by.core.models.UserModel;
+import by.core.services.AuditoriumService;
 import by.core.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,10 @@ public class BookingServiceImpl implements BookingService {
 
     private BookingDAOImpl booking;
     private Utils utils;
+    @Autowired
+    AuditoriumServiceImpl auditoriumService;
+    @Autowired
+    DiscountServiceImpl discountService;
 
     public BookingServiceImpl() {}
 
@@ -28,10 +36,11 @@ public class BookingServiceImpl implements BookingService {
         return null;
     }
 
-    public TicketModel bookTicket(String eventName, String userName, int seatNumber) {
+    public TicketModel bookTicket(BookingModel bookingModel, int seatNumber) {
         TicketModel ticket = null;
         try {
-            ticket = booking.bookTicket(eventName, userName, seatNumber);
+            populateBookingModel(bookingModel, seatNumber);
+            ticket = booking.bookTicket(bookingModel, seatNumber);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +48,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public TicketModel bookTicket(String eventName, String userName, int seatNumber, boolean enableDiscountStrategy) {
+    public TicketModel bookTicket(BookingModel bookingModel, int seatNumber, boolean enableDiscountStrategy) {
         TicketModel ticket = null;
         try {
-            ticket = booking.bookTicket(eventName, userName, seatNumber, enableDiscountStrategy);
+            populateBookingModel(bookingModel, seatNumber);
+            ticket = booking.bookTicket(bookingModel, seatNumber, enableDiscountStrategy);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,4 +62,17 @@ public class BookingServiceImpl implements BookingService {
     public Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate) {
         return booking.getPurchasedTicketsForEvent(eventName, eventDate);
     }
+
+    @Override
+    public BookingModel getBookingModel(UserModel userModel, EventModel eventModel, boolean isSeatVip, int discount) {
+        return new BookingModel(userModel, eventModel, isSeatVip, discount);
+    }
+
+    private void populateBookingModel(BookingModel bookingModel, int seatNumber) throws IOException {
+        //TODO  прикрутить куда-нить дату, пока хз куда
+        Date date = new Date(System.currentTimeMillis());
+        bookingModel.setSeatVip(auditoriumService.isPlaceVip(bookingModel.getEventModel().getEventPlace(), seatNumber));
+        bookingModel.setDiscount(discountService.getDiscount(bookingModel.getUserModel().getUserName(), bookingModel.getEventModel().getEventName(), date));
+    }
+
 }
