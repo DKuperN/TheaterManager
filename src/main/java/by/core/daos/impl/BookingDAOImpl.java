@@ -5,11 +5,6 @@ import by.core.models.BookingModel;
 import by.core.models.EventModel;
 import by.core.models.TicketModel;
 import by.core.models.UserModel;
-import by.core.services.impl.AuditoriumServiceImpl;
-import by.core.services.impl.DiscountServiceImpl;
-import by.core.services.impl.EventServiceImpl;
-import by.core.services.impl.UserServiceImpl;
-import org.springframework.stereotype.Repository;
 import by.utils.Utils;
 
 import javax.sql.DataSource;

@@ -7,8 +7,8 @@ import by.core.services.impl.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -43,6 +43,7 @@ public class BookingEventTest {
 
 
     @Test
+    //@Repeat(value = 3)
     public void bookingTicketTest() throws IOException {
         String userName = environment.getProperty("test.userName");
         String eventName = environment.getProperty("test.eventName");
@@ -58,7 +59,7 @@ public class BookingEventTest {
         Random r = new Random();
         int seatPlaceNumber = r.nextInt(100);
 
-        TicketModel ticket = bookingService.bookTicket(bookingModel, seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
+        TicketModel ticket = bookingService.bookTicketModel(bookingModel, seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
         assertNotNull(ticket);
         System.out.println("Your ticket:");
         System.out.println("ticket id:    " + ticket.getTicketId());

@@ -12,9 +12,10 @@ public interface BookingService {
 
     Double getTicketPrice(String eventName, String userName, int seatNumber);
 
-    TicketModel bookTicket(BookingModel bookingModel, int seatNumber);
+//    @Deprecated //not uses
+//    TicketModel bookTicketModel(BookingModel bookingModel, int seatNumber);
 
-    TicketModel bookTicket(BookingModel bookingModel, int seatNumber, boolean enableDiscountStrategy);
+    TicketModel bookTicketModel(BookingModel bookingModel, int seatNumber, boolean enableDiscountStrategy);
 
     Map<String, Object> getPurchasedTicketsForEvent(String eventName, Date eventDate);
 

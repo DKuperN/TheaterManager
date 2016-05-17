@@ -5,6 +5,7 @@ import by.core.models.EventModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import by.core.services.impl.EventServiceImpl;
@@ -24,10 +25,12 @@ public class TestEventService {
     private EventServiceImpl eventService;
     @Autowired
     private Utils utils;
+    @Autowired
+    Environment environment;
 
     @Test
     public void testGetEventByName() throws IOException {
-        String eName = utils.getPropertyByName("test.eventName");
+        String eName = environment.getProperty("test.eventName");
 
         EventModel eventModel = eventService.getEventByName(eName);
         assertEquals(eName, eventModel.getEventName());
