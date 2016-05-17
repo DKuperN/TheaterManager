@@ -30,7 +30,10 @@ public class BookingDAOImpl implements BookingDAO {
     private EventModel event;
     private UserModel user;
 
-    public BookingDAOImpl() {}
+    public BookingDAOImpl(DataSource dataSource, Utils utils) {
+        this.dataSource = dataSource;
+        this.utils = utils;
+    }
 
     public BookingDAOImpl(BookingModel bookingModel, DataSource dataSource, Utils utils, boolean useDiscountStrategy) {
         this.bookingModel = bookingModel;

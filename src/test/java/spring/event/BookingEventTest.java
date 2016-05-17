@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
@@ -24,7 +25,10 @@ import java.util.Random;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AnnotationBeans.class})
+@ContextHierarchy({
+        @ContextConfiguration(locations = {"classpath:discountStrategy.xml"}),
+        @ContextConfiguration(classes = {AnnotationBeans.class})
+})
 public class BookingEventTest {
     @Autowired
     private BookingServiceImpl bookingService;
@@ -32,8 +36,6 @@ public class BookingEventTest {
     private UserServiceImpl userService;
     @Autowired
     private EventServiceImpl eventService;
-    @Autowired
-    private AuditoriumServiceImpl auditoriumService;
     @Autowired
     Environment environment;
     @Autowired
@@ -55,8 +57,6 @@ public class BookingEventTest {
 
         Random r = new Random();
         int seatPlaceNumber = r.nextInt(100);
-
-        boolean placeVip = auditoriumService.isPlaceVip(eventName, seatPlaceNumber);
 
         TicketModel ticket = bookingService.bookTicket(bookingModel, seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
         assertNotNull(ticket);

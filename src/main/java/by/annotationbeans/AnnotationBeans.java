@@ -3,10 +3,11 @@ package by.annotationbeans;
 import by.core.daos.impl.BookingDAOImpl;
 import by.core.daos.impl.EventDaoImpl;
 import by.core.daos.impl.UserDaoImpl;
-import by.core.services.impl.*;
-import by.core.strategy.DiscountServiceStrategy;
-import by.core.strategy.impl.BirthdayDiscountStrategyImpl;
-import by.core.strategy.impl.EveryXTicketHaveYDiscountStrategyImpl;
+import by.core.services.impl.AuditoriumServiceImpl;
+import by.core.services.impl.BookingServiceImpl;
+import by.core.services.impl.EventServiceImpl;
+import by.core.services.impl.UserServiceImpl;
+import by.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,9 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
-import by.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -55,21 +54,6 @@ public class AnnotationBeans {
         return new BookingServiceImpl(bookingDAO(), utils());
     }
     @Bean
-    public BirthdayDiscountStrategyImpl birthdayDiscountStrategy() {
-        return new BirthdayDiscountStrategyImpl();
-    }
-    @Bean
-    public EveryXTicketHaveYDiscountStrategyImpl everyXTicketHaveYDiscountStrategy() {
-        return new EveryXTicketHaveYDiscountStrategyImpl();
-    }
-//    @Bean
-//    public DiscountServiceImpl discountService(){
-//        ArrayList<DiscountServiceStrategy> serviceStrategy = new ArrayList<>();
-//        serviceStrategy.add(1, birthdayDiscountStrategy());
-//        serviceStrategy.add(2, everyXTicketHaveYDiscountStrategy());
-//        return new DiscountServiceImpl(serviceStrategy, true, true);
-//    }
-    @Bean
     public EventServiceImpl eventService(){
         return new EventServiceImpl(eventDao(), new Date(), java.text.DateFormat.getDateTimeInstance());
     }
@@ -81,7 +65,7 @@ public class AnnotationBeans {
     //DAO
     @Bean
     public BookingDAOImpl bookingDAO(){
-        return new BookingDAOImpl();
+        return new BookingDAOImpl(dataSource(), utils());
     }
     @Bean
     public EventDaoImpl eventDao(){

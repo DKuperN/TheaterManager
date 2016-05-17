@@ -71,7 +71,7 @@ public class BookingServiceImpl implements BookingService {
     private void populateBookingModel(BookingModel bookingModel, int seatNumber) throws IOException {
         //TODO  прикрутить куда-нить дату, пока хз куда
         Date date = new Date(System.currentTimeMillis());
-        bookingModel.setSeatVip(auditoriumService.isPlaceVip(bookingModel.getEventModel().getEventName(), seatNumber));
+        bookingModel.setSeatVip(auditoriumService.isPlaceVip(bookingModel.getEventModel().getEventPlace(), seatNumber));
         bookingModel.setDiscount(discountService.getDiscount(bookingModel.getUserModel().getUserName(), bookingModel.getEventModel().getEventName(), date));
     }
 
