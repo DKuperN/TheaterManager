@@ -3,6 +3,7 @@ package by.utils;
 import by.core.models.AuditoriumModel;
 import by.core.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -21,6 +22,8 @@ import java.util.Properties;
 public class Utils {
 
     private DataSource dataSource;
+    @Autowired
+    Environment environment;
 
     public Utils() {}
 
@@ -31,6 +34,8 @@ public class Utils {
     private Properties prop = new Properties();
     private InputStream inputStream = getClass().getClassLoader().getResourceAsStream("app.properties");
 
+    @Deprecated
+    //use @Autowired Environment environment;
     public String getPropertyByName(String propertyName) throws IOException {
         if (inputStream != null) {
             prop.load(inputStream);
@@ -204,7 +209,8 @@ public class Utils {
 
     public Double getResultPrice(double basePriceForTicket, boolean placeVip, int eventRating) throws IOException {
         Double price = basePriceForTicket;
-        String coefficientVip = getPropertyByName("coefficient.vip");
+//        String coefficientVip = getPropertyByName("coefficient.vip");
+        String coefficientVip = environment.getProperty("coefficient.vip");
         if(placeVip) {
             price = basePriceForTicket * Double.parseDouble(coefficientVip);
         }

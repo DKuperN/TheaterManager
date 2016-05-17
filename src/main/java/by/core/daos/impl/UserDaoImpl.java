@@ -14,9 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserDaoImpl implements UserDAO {
@@ -116,6 +114,26 @@ public class UserDaoImpl implements UserDAO {
         }
 
         return allUsers;
+    }
+
+    @Override
+    public Set<Integer> getUsersTickets(int userID) {
+        Set<Integer> bookedTickets = new HashSet<>();
+        Connection connection = null;
+        final String SQL_SEARCH_USER_BY_NAME = "SELECT * FROM BOOKTICKETS WHERE USERID=?";
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_USER_BY_NAME);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bookedTickets.add(rs.getInt("TICKETID"));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookedTickets;
     }
 
 }

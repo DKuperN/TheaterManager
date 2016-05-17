@@ -36,19 +36,8 @@ public class BookingServiceImpl implements BookingService {
         return null;
     }
 
-    public TicketModel bookTicket(BookingModel bookingModel, int seatNumber) {
-        TicketModel ticket = null;
-        try {
-            populateBookingModel(bookingModel, seatNumber);
-            ticket = booking.bookTicket(bookingModel, seatNumber);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ticket;
-    }
-
     @Override
-    public TicketModel bookTicket(BookingModel bookingModel, int seatNumber, boolean enableDiscountStrategy) {
+    public TicketModel bookTicketModel(BookingModel bookingModel, int seatNumber, boolean enableDiscountStrategy) {
         TicketModel ticket = null;
         try {
             populateBookingModel(bookingModel, seatNumber);

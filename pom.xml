@@ -22,6 +22,7 @@
 
     <properties>
         <spring.ver>4.2.5.RELEASE</spring.ver>
+        <aspectj.version>1.7.3</aspectj.version>
     </properties>
 
     <dependencies>
@@ -77,6 +78,18 @@
             <version>1.9.5</version>
         </dependency>
 
+
+        <!--Aspects-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
 
     </dependencies>
 
