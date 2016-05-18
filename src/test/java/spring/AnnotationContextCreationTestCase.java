@@ -1,10 +1,7 @@
 package spring;
 
 import by.annotationbeans.AnnotationBeans;
-import by.core.services.impl.AuditoriumServiceImpl;
-import by.core.services.impl.BookingServiceImpl;
-import by.core.services.impl.EventServiceImpl;
-import by.core.services.impl.UserServiceImpl;
+import by.core.services.impl.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class AnnotationContextCreationTestCase {
     private BookingServiceImpl bookingService;
     @Autowired
     private AuditoriumServiceImpl auditoriumService;
+    @Autowired
+    private AspectServiceImpl aspectService;
 
     @Autowired
     private Utils utils;
@@ -45,6 +44,8 @@ public class AnnotationContextCreationTestCase {
         assertNotNull(bookingService);
         System.out.println("AuditoriumServiceBean = " + auditoriumService);
         assertNotNull(auditoriumService);
+        System.out.println("AspectServiceBean = " + aspectService);
+        assertNotNull(aspectService);
         System.out.println("All service beans are OK!");
     }
     @Test

@@ -4,8 +4,6 @@ public class AuditoriumModel {
 
     private String auditoriumName;
 
-    //private int auditoriumId;
-
     private int auditoriumCapacity;
 
     private int[] auditoriumVIPSeats;
@@ -45,14 +43,6 @@ public class AuditoriumModel {
     public void setAuditoriumName(String auditoriumName) {
         this.auditoriumName = auditoriumName;
     }
-
-//    public int getAuditoriumId() {
-//        return auditoriumId;
-//    }
-
-//    public void setAuditoriumId(int auditoriumId) {
-//        this.auditoriumId = auditoriumId;
-//    }
 
     public int getAuditoriumCapacity() {
         return auditoriumCapacity;

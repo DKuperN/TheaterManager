@@ -1,7 +1,10 @@
 package by.aspects;
 
+import by.core.models.AspectsModel;
+import by.core.services.impl.AspectServiceImpl;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class CounterAspect {
+
+    @Autowired
+    AspectServiceImpl aspectService;
 
     public CounterAspect() {}
 
@@ -58,6 +64,9 @@ public class CounterAspect {
     @After("countBookTicket()")
     private void countBookTicketPointcut(){
         countBookTicket++;
+        // TODO: 18-May-16  сдалать в таблице еще один ключ с именем аспект каунта, и по нему потом делать апдейт
+//        AspectsModel aspectsModel = new AspectsModel();
+//        aspectService.storeAspect(aspectsModel);
         System.out.println("###### Ticket was booked: " + countBookTicket + " times!");
     }
 }

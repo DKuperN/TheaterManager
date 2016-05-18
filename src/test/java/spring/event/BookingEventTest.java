@@ -60,17 +60,19 @@ public class BookingEventTest {
         int seatPlaceNumber = r.nextInt(100);
 
         TicketModel ticket = bookingService.bookTicketModel(bookingModel, seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
+        TicketModel ticket2 = bookingService.bookTicketModel(bookingModel, seatPlaceNumber, Boolean.parseBoolean(enableDiscountStrategy));
         assertNotNull(ticket);
-        System.out.println("Your ticket:");
-        System.out.println("ticket id:    " + ticket.getTicketId());
-        System.out.println("Where:        " + ticket.getEventModel().getEventPlace());
-        System.out.println("Place number: " + seatPlaceNumber + (ticket.isSeatVip() ? " - vip" : ""));
-        System.out.println("Event name:   " + ticket.getEventModel().getEventName());
-        System.out.println("Event date:   " + ticket.getEventModel().getEventDate());
-        System.out.println("Begin:        " + ticket.getEventModel().getEventStartTime());
-        System.out.println("Finish:       " + ticket.getEventModel().getEventEndTime());
-        System.out.println("Ticket price: " + ticket.getResultPrice() + " popugaev!");
-        System.out.println("Discount:     " + ticket.getDiscount() + "%");
+        assertNotNull(ticket2);
+//        System.out.println("Your ticket:");
+//        System.out.println("ticket id:    " + ticket.getTicketId());
+//        System.out.println("Where:        " + ticket.getEventModel().getEventPlace());
+//        System.out.println("Place number: " + seatPlaceNumber + (ticket.isSeatVip() ? " - vip" : ""));
+//        System.out.println("Event name:   " + ticket.getEventModel().getEventName());
+//        System.out.println("Event date:   " + ticket.getEventModel().getEventDate());
+//        System.out.println("Begin:        " + ticket.getEventModel().getEventStartTime());
+//        System.out.println("Finish:       " + ticket.getEventModel().getEventEndTime());
+//        System.out.println("Ticket price: " + ticket.getResultPrice() + " popugaev!");
+//        System.out.println("Discount:     " + ticket.getDiscount() + "%");
         System.out.println("*************");
     }
 

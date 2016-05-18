@@ -2,13 +2,11 @@ package by.annotationbeans;
 
 import by.aspects.CounterAspect;
 import by.aspects.DiscountAspect;
+import by.core.daos.impl.AspectDaoImpl;
 import by.core.daos.impl.BookingDAOImpl;
 import by.core.daos.impl.EventDaoImpl;
 import by.core.daos.impl.UserDaoImpl;
-import by.core.services.impl.AuditoriumServiceImpl;
-import by.core.services.impl.BookingServiceImpl;
-import by.core.services.impl.EventServiceImpl;
-import by.core.services.impl.UserServiceImpl;
+import by.core.services.impl.*;
 import by.utils.Utils;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +76,14 @@ public class AnnotationBeans {
     }
 
     //Aspects
+    @Bean
+    public AspectDaoImpl aspectDao(){
+        return new AspectDaoImpl(dataSource(), utils());
+    }
+    @Bean
+    public AspectServiceImpl aspectService(){
+        return new AspectServiceImpl(aspectDao());
+    }
     @Bean
     public CounterAspect counterAspect() {
         return new CounterAspect();

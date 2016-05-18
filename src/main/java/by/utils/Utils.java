@@ -82,6 +82,9 @@ public class Utils {
                     java.util.Date utilDate = (Date) parameters.get(i);
                     java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
                     ps.setDate(i, sqlDate);
+                } else if(parameters.get(i) instanceof java.util.Date){
+                    java.sql.Date sqlDate = new java.sql.Date(((Date) parameters.get(i)).getTime());
+                    ps.setDate(i, sqlDate);
                 } else if(parameters.get(i) instanceof Integer){
                     ps.setInt(i, (Integer) parameters.get(i));
                 } else if(parameters.get(i) instanceof Double){

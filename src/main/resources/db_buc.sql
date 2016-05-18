@@ -15,6 +15,19 @@ CREATE DATABASE IF NOT EXISTS `theatredb` /*!40100 DEFAULT CHARACTER SET utf8 */
 USE `theatredb`;
 
 
+-- Dumping structure for table theatredb.aspects_counter
+CREATE TABLE IF NOT EXISTS `aspects_counter` (
+  `aspectId` int(11) NOT NULL AUTO_INCREMENT,
+  `counterName` varchar(50) NOT NULL DEFAULT '0',
+  `counterQuantity` int(11) NOT NULL DEFAULT '0',
+  `date` date NOT NULL,
+  `startTime` time NOT NULL,
+  PRIMARY KEY (`aspectId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
+
+
 -- Dumping structure for table theatredb.booktickets
 CREATE TABLE IF NOT EXISTS `booktickets` (
   `ticketID` int(11) NOT NULL AUTO_INCREMENT,

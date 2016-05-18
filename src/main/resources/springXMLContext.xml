@@ -44,6 +44,8 @@
         <constructor-arg ref="utils"/>
     </bean>
 
+    <bean id="aspectService" class="by.core.services.impl.AspectServiceImpl"/>
+
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" lazy-init="true"/>
 
 </beans>
