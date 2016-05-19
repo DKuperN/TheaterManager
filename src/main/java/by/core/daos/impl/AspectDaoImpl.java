@@ -37,7 +37,7 @@ public class AspectDaoImpl implements AspectDAO {
                         rs.getString("counterName"),
                         rs.getInt("counterQuantity"),
                         rs.getDate("date"),
-                        rs.getTime("startTime")
+                        rs.getTime("finalCountTime")
                 );
             }
             rs.close();
@@ -52,7 +52,7 @@ public class AspectDaoImpl implements AspectDAO {
         int id = 0;
         try {
             connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ASPECTS_COUNTER AC WHERE AC.counterName = ? AND AC.STARTTIME = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ASPECTS_COUNTER AC WHERE AC.counterName = ? AND AC.FINALCOUNTTIME = ?");
             ps.setString(1, counterName);
             ps.setTime(2, aspectTime);
             ResultSet rs = ps.executeQuery();
@@ -86,7 +86,7 @@ public class AspectDaoImpl implements AspectDAO {
                         rs.getString("counterName"),
                         rs.getInt("counterQuantity"),
                         rs.getDate("date"),
-                        rs.getTime("startTime")
+                        rs.getTime("finalCountTime")
                 );
                 aspectsModelList.add(aspectsModel);
             }
@@ -100,13 +100,16 @@ public class AspectDaoImpl implements AspectDAO {
 
     @Override
     public void storeAspect(AspectsModel aspectsModel) {
-        final String SQL_SAVE_ASPECT_COUNTER = "INSERT INTO ASPECTS_COUNTER (counterName, counterQuantity, date, startTime) VALUES (?, ?, ?, ?)" +
-                "ON DUPLICATE KEY UPDATE counterName = ?, counterQuantity = ?, date = ?, startTime = ?";
+        final String SQL_SAVE_ASPECT_COUNTER = "INSERT INTO ASPECTS_COUNTER (counterName, counterQuantity, date, finalCountTime) VALUES (?, ?, ?, ?)" +
+                "ON DUPLICATE KEY UPDATE counterQuantity = ?, date = ?, finalCountTime = ?";
         HashMap<Integer, Object> map = new HashMap<>();
         map.put(1, aspectsModel.getCounterName());
         map.put(2, aspectsModel.getCounterQuantity());
         map.put(3, new java.sql.Date((aspectsModel.getCounterDateTime()).getTime()));
-        map.put(4, aspectsModel.getCounterStartTime());
+        map.put(4, aspectsModel.getFinalCounterTime());
+        map.put(5, aspectsModel.getCounterQuantity());
+        map.put(6, new java.sql.Date((aspectsModel.getCounterDateTime()).getTime()));
+        map.put(7, aspectsModel.getFinalCounterTime());
         utils.executeQuery(SQL_SAVE_ASPECT_COUNTER, map);
     }
 }

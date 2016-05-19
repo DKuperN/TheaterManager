@@ -62,7 +62,7 @@ public class AspectServicesTest {
         System.out.println("Counter Name      : " + aspectsModel.getCounterName());
         System.out.println("Counter quantity  : " + aspectsModel.getCounterQuantity());
         System.out.println("Counter date      : " + aspectsModel.getCounterDateTime());
-        System.out.println("Counter timeStart : " + aspectsModel.getCounterStartTime());
+        System.out.println("Counter timeStart : " + aspectsModel.getFinalCounterTime());
         System.out.println("********************");
     }
 

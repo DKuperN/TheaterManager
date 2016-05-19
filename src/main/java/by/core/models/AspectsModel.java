@@ -8,20 +8,20 @@ public class AspectsModel {
     String counterName;
     int counterQuantity;
     Date counterDateTime;
-    Time counterStartTime;
+    Time finalCounterTime;
 
-    public AspectsModel(int aspectID, String counterName, int counterQuantity, Date counterDateTime, Time counterStartTime) {
+    public AspectsModel(int aspectID, String counterName, int counterQuantity, Date counterDateTime, Time finalCounterTime) {
         this.aspectID = aspectID;
         this.counterName = counterName;
         this.counterQuantity = counterQuantity;
         this.counterDateTime = counterDateTime;
-        this.counterStartTime = counterStartTime;
+        this.finalCounterTime = finalCounterTime;
     }
-    public AspectsModel(String counterName, int counterQuantity, Date counterDateTime, Time counterStartTime) {
+    public AspectsModel(String counterName, int counterQuantity, Date counterDateTime, Time finalCounterTime) {
         this.counterName = counterName;
         this.counterQuantity = counterQuantity;
         this.counterDateTime = counterDateTime;
-        this.counterStartTime = counterStartTime;
+        this.finalCounterTime = finalCounterTime;
     }
 
     public int getAspectID() {
@@ -56,11 +56,11 @@ public class AspectsModel {
         this.counterDateTime = counterDateTime;
     }
 
-    public Time getCounterStartTime() {
-        return counterStartTime;
+    public Time getFinalCounterTime() {
+        return finalCounterTime;
     }
 
-    public void setCounterStartTime(Time counterStartTime) {
-        this.counterStartTime = counterStartTime;
+    public void setFinalCounterTime(Time finalCounterTime) {
+        this.finalCounterTime = finalCounterTime;
     }
 }

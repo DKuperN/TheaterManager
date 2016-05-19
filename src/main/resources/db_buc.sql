@@ -18,11 +18,12 @@ USE `theatredb`;
 -- Dumping structure for table theatredb.aspects_counter
 CREATE TABLE IF NOT EXISTS `aspects_counter` (
   `aspectId` int(11) NOT NULL AUTO_INCREMENT,
-  `counterName` varchar(50) NOT NULL DEFAULT '0',
+  `counterName` varchar(50) NOT NULL,
   `counterQuantity` int(11) NOT NULL DEFAULT '0',
   `date` date NOT NULL,
-  `startTime` time NOT NULL,
-  PRIMARY KEY (`aspectId`)
+  `finalCountTime` time NOT NULL,
+  PRIMARY KEY (`counterName`),
+  KEY `aspectId` (`aspectId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.

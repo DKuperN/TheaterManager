@@ -5,7 +5,16 @@ import by.core.services.impl.AspectServiceImpl;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Component;
+
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * count how many times each event was accessed by name, how many times its prices were queried, how many times its tickets were booked
@@ -26,9 +35,15 @@ public class CounterAspect {
     private void countGetEventByName(){}
     int countGetEventByName = 0;
     @AfterReturning("countGetEventByName()")
-    public void countGetEventByNamePointcut(JoinPoint joinPoint){
+    public void countGetEventByNamePointcut(JoinPoint joinPoint) throws ParseException {
         countGetEventByName++;
-        System.out.println("###### Event was accessed by name : " + countGetEventByName + " times!");
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat timeFormatter = new SimpleDateFormat("HH.mm");
+        Calendar calendar = new GregorianCalendar();
+        String time = timeFormatter.format(calendar.getTime());
+        AspectsModel aspectsModel = new AspectsModel("countGetEventByName", countGetEventByName, new java.sql.Date(date.getTime()), new Time(timeFormatter.parse(time).getTime()));
+        aspectService.storeAspect(aspectsModel);
+        System.out.println("###### Counter: countGetEventByName saved in DB!");
     }
 
     /**
@@ -38,9 +53,15 @@ public class CounterAspect {
     private void countGetPriceForTicket(){}
     int countGetPriceForTicket = 0;
     @AfterReturning("countRegisterUser()")
-    public void countGetPriceForTicket(JoinPoint joinPoint) {
+    public void countGetPriceForTicket(JoinPoint joinPoint) throws ParseException {
         countGetPriceForTicket++;
-        System.out.println("###### Ticket price was interested: " + countGetPriceForTicket + " times!");
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat timeFormatter = new SimpleDateFormat("HH.mm");
+        Calendar calendar = new GregorianCalendar();
+        String time = timeFormatter.format(calendar.getTime());
+        AspectsModel aspectsModel = new AspectsModel("countRegisterUser", countGetPriceForTicket, new java.sql.Date(date.getTime()), new Time(timeFormatter.parse(time).getTime()));
+        aspectService.storeAspect(aspectsModel);
+        System.out.println("###### Counter: countRegisterUser saved in DB!");
     }
 
     /**
@@ -50,9 +71,15 @@ public class CounterAspect {
     private void countRegisterUser(){}
     int countRegisteredUser = 0;
     @AfterReturning("countRegisterUser()")
-    public void countRegisterUserPointcut(JoinPoint joinPoint){
+    public void countRegisterUserPointcut(JoinPoint joinPoint) throws ParseException {
         countRegisteredUser++;
-        System.out.println("###### Total user(s) : " + countRegisteredUser + " was registered");
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat timeFormatter = new SimpleDateFormat("HH.mm");
+        Calendar calendar = new GregorianCalendar();
+        String time = timeFormatter.format(calendar.getTime());
+        AspectsModel aspectsModel = new AspectsModel("countRegisterUser", countRegisteredUser, new java.sql.Date(date.getTime()), new Time(timeFormatter.parse(time).getTime()));
+        aspectService.storeAspect(aspectsModel);
+        System.out.println("###### Counter: countRegisterUser saved in DB!");
     }
 
     /**
@@ -62,11 +89,14 @@ public class CounterAspect {
     private void countBookTicket(){}
     int countBookTicket = 0;
     @After("countBookTicket()")
-    private void countBookTicketPointcut(){
+    private void countBookTicketPointcut(JoinPoint joinPoint) throws ParseException {
         countBookTicket++;
-        // TODO: 18-May-16  сдалать в таблице еще один ключ с именем аспект каунта, и по нему потом делать апдейт
-//        AspectsModel aspectsModel = new AspectsModel();
-//        aspectService.storeAspect(aspectsModel);
-        System.out.println("###### Ticket was booked: " + countBookTicket + " times!");
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat timeFormatter = new SimpleDateFormat("HH.mm");
+        Calendar calendar = new GregorianCalendar();
+        String time = timeFormatter.format(calendar.getTime());
+        AspectsModel aspectsModel = new AspectsModel("countBookTicket", countBookTicket, new java.sql.Date(date.getTime()), new Time(timeFormatter.parse(time).getTime()));
+        aspectService.storeAspect(aspectsModel);
+        System.out.println("###### Counter: countBookTicket saved in DB!");
     }
 }
