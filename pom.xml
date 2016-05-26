@@ -57,6 +57,13 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.ver}</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.ver}</version>
+        </dependency>
+
 
         <!-- MySQL database driver -->
         <dependency>
