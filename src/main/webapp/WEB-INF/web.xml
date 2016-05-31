@@ -4,7 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!-- Add Support for Spring -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
     <!-- Создает Spring Container, доступный всем сервлетам и фильтрам -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
