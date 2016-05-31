@@ -10,7 +10,9 @@
         <center>
             <h1>Hello world!</h1>
             <h3>
-                <a href="hello?name=Eric">Click Here</a>
+                <span>Click Here:</span>
+                <div><a href="hello?name=Eric">- to see welcome page</a></div>
+                <div><a href="userprocessing">- to go on user-edit page</a></div>
             </h3>
         </center>
     </body>

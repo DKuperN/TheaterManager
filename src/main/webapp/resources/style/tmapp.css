@@ -1,0 +1,31 @@
+div{
+    font-size: 20px;
+}
+
+p{
+    text-align: left;
+    margin-left: 15px;
+}
+
+li{
+    font-size: 22px;
+    font-style: italic;
+}
+
+.userworkarea{
+    height:500px;
+    width: 1000px;
+    border: dotted 1px gray;
+    overflow: hidden;
+    text-align: center;
+}
+#userMenu {
+    width: 500px;
+    float: left;
+}
+
+#ErrorPage{
+    text-align: center;
+    color: red;
+    font-sizes: bold;
+}
