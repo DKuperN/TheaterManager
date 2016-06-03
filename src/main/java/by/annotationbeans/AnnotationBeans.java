@@ -8,7 +8,6 @@ import by.core.daos.impl.EventDaoImpl;
 import by.core.daos.impl.UserDaoImpl;
 import by.core.services.impl.*;
 import by.utils.Utils;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;

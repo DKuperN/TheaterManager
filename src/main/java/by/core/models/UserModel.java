@@ -13,6 +13,9 @@ public class UserModel {
     private int userId;
     private Set<Integer> bookedTickets = new TreeSet<>();
 
+    public UserModel() {
+    }
+
     public UserModel(int userId, String userEmail, String userName, Set<Integer> bookedTickets) {
         this.userName = userName;
         this.userEmail = userEmail;

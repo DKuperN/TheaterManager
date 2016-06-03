@@ -10,4 +10,5 @@ function hideActionForms() {
     $("form").each(function (i) {
         $(this).css("display", "none");
     });
+    $("#actionResultArea").css("display", "none");
 }

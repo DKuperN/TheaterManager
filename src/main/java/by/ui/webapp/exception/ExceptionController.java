@@ -1,4 +1,4 @@
-package by.ui.webapp.controllers;
+package by.ui.webapp.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

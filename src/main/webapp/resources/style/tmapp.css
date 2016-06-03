@@ -20,7 +20,7 @@ li{
     text-align: center;
 }
 #userMenu {
-    width: 500px;
+    width: 300px;
     float: left;
 }
 
@@ -28,4 +28,11 @@ li{
     text-align: center;
     color: red;
     font-sizes: bold;
+}
+
+#actionResultArea{
+    height:500px;
+    width: 300px;
+    border: dotted 1px gray;
+    overflow: hidden;
 }
