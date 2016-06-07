@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class StartController {
 
-    @RequestMapping("/")
+    @RequestMapping("/test")
     public ModelAndView showStartPage(){
         return new ModelAndView("index");
     }

@@ -17,15 +17,15 @@ public class StartConsoleApp {
         this.appMenu = appMenu;
     }
 
-    public static void main(String[] args) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("springXMLContext.xml");
-        StartConsoleApp app = (StartConsoleApp) context.getBean("theaterManagerApp");
-
-        try {
-            app.appMenu.showMainMenu();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public static void main(String[] args) {
+//        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("springXMLContext.xml");
+//        StartConsoleApp app = (StartConsoleApp) context.getBean("theaterManagerApp");
+//
+//        try {
+//            app.appMenu.showMainMenu();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }

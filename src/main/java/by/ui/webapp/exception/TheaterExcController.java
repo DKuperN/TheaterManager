@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ExceptionController {
+public class TheaterExcController {
  final String ERROR_PAGE = "errorpage";
-    @RequestMapping("/error")
+    @RequestMapping("/app-err")
     public ModelAndView showMessage(
             @RequestParam(value = "msg", required = false) String message,
             @RequestParam(value = "sttrace", defaultValue = "") String sttrace){
