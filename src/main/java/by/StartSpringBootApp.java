@@ -10,11 +10,11 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.util.Arrays;
 
-//@Configuration
-//@EnableAutoConfiguration
-//@ComponentScan(basePackages = {"by.core", "by.utils"})
-//@PropertySource({"classpath:app.properties"})
-@SpringBootApplication
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan(basePackages = {"by.core", "by.utils"})
+@PropertySource({"classpath:app.properties"})
+//@SpringBootApplication
 public class StartSpringBootApp {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(StartSpringBootApp.class, args);
@@ -23,8 +23,9 @@ public class StartSpringBootApp {
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }
+//        for (String beanName : beanNames) {
+//            System.out.println(beanName);
+//        }
+        Arrays.stream(beanNames).forEach(System.out::println);
     }
 }
