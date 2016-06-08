@@ -7,9 +7,9 @@
  		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <import resource="mysql-connection.xml"/>
-    <import resource="dao.xml"/>
-    <import resource="utils.xml"/>
+    <!--<import resource="mysql-connection.xml"/>-->
+    <!--<import resource="dao.xml"/>-->
+    <!--<import resource="utils.xml"/>-->
     <!--<import resource="menu-loader.xml"/>-->
     <context:property-placeholder location="classpath:app.properties"/>
 

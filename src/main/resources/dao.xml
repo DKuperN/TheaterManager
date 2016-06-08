@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd"
         default-lazy-init="true">
 
-    <import resource="discountStrategy.xml"/>
+    <!--<import resource="discountStrategy.xml"/>-->
 
     <!--DAO-->
     <bean id="userDao" parent="auditoriumService"  class="by.core.daos.impl.UserDaoImpl">
